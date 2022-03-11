@@ -30,6 +30,63 @@ Action ComportamientoJugador::think(Sensores sensores){
 	cout << "Vida: " << sensores.vida << endl;
 	cout << endl;
 
+	switch(ultimaAccion)
+	{
+		case actFORWARD: // si mi utima accion fue ir para delante
+			switch(brujula)
+			{
+				case 0 : fil--; break;
+				case 1 : col++; break;
+				case 2 : fil++; break;
+				case 3 : col--; break;
+			}
+		break;
+
+		case actTURN_R: // giramos a la derecha
+			brujula = (brujula+1)%4;// ya que trabajamos con 4 valores nada mas
+			girar_derecha = (rand()%2 == 0);
+		break;
+
+		case actTURN_L: // giramos a la izquierda
+			brujula = (brujula+3)%4;// ya que trabajamos con 4 valores nada mas y c++ con valores negativos caca,
+			girar_derecha = (rand()%2 == 0);// seria igual si le sumamos 3 ya que va a dar la vuelta al estar en modulo 4
+		break;						
+
+	}
+
+	cout<< "fil: "<<fil<<endl;
+	cout<< "col: "<<col<<endl;
+	cout<< "brujula: "<<brujula<<endl;
+
+	if(sensores.terreno[0] == 'G' and !bien_situados)
+	{
+		fil = sensores.posF;
+		col = sensores.posC;
+		bien_situados = true;
+	}
+
+	if(bien_situados)
+		mapaResultado[fil][col] = sensores.terreno[0];
+
+	// comprobamos que se pueda avanzar
+	if( (sensores.terreno[2] == 'T' or sensores.terreno[2] == 'S' or sensores.terreno[2] == 'G' )
+	and sensores.superficie[2] == '_')
+	{
+		accion = actFORWARD;
+		cout<<"Avanzo"<<endl;
+	}
+	else if (girar_derecha)
+	{
+		accion = actTURN_L;
+		cout<<"Giro a la izq"<<endl;
+	}
+	else
+	{
+		accion = actTURN_R;
+		cout<<"Giro a la der"<<endl;
+	}
+
+	ultimaAccion = accion;
 
 	// Determinar el efecto de la ultima accion enviada
 	return accion;
