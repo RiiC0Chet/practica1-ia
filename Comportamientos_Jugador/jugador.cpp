@@ -58,7 +58,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 	cout<< "col: "<<col<<endl;
 	cout<< "brujula: "<<brujula<<endl;
 
-	if(sensores.terreno[0] == 'G' and !bien_situados)
+	if(sensores.terreno[0] == 'G' && !bien_situados)
 	{
 		fil = sensores.posF;
 		col = sensores.posC;
@@ -69,8 +69,8 @@ Action ComportamientoJugador::think(Sensores sensores){
 		mapaResultado[fil][col] = sensores.terreno[0];
 
 	// comprobamos que se pueda avanzar
-	if( (sensores.terreno[2] == 'T' or sensores.terreno[2] == 'S' or sensores.terreno[2] == 'G' )
-	and sensores.superficie[2] == '_')
+	if( (sensores.terreno[2] == 'T' || sensores.terreno[2] == 'S' || sensores.terreno[2] == 'G' )
+	&& sensores.superficie[2] == '_')
 	{
 		accion = actFORWARD;
 		cout<<"Avanzo"<<endl;
