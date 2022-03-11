@@ -12,6 +12,7 @@ class ComportamientoJugador : public Comportamiento{
       // Dar el valor inicial a las variables de estado
       fil = col = 99;
       brujula =0;
+      origen = (brujula+2)%4; // origen tiene que apuntar al lugar contrario a donde nos dirigimos
       ultimaAccion = actIDLE;
       girar_derecha = false;
       bien_situados = false;
@@ -26,7 +27,8 @@ class ComportamientoJugador : public Comportamiento{
   private:
   
   // Declarar aquí las variables de estado
-  int fil, col, brujula;
+  // Con origen alamcenamos desde que posicion venimos (para no volver sobre nuestros pasos)
+  int fil, col, brujula, origen;
   Action ultimaAccion;
   bool girar_derecha, bien_situados;
 };

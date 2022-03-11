@@ -69,9 +69,10 @@ Action ComportamientoJugador::think(Sensores sensores){
 		mapaResultado[fil][col] = sensores.terreno[0];
 
 	// comprobamos que se pueda avanzar
-	if( (sensores.terreno[2] == 'T' || sensores.terreno[2] == 'S' || sensores.terreno[2] == 'G' )
-	&& sensores.superficie[2] == '_')
+	if( ( (sensores.terreno[2] == 'T' || sensores.terreno[2] == 'S' || sensores.terreno[2] == 'G' )
+	&& sensores.superficie[2] == '_') && brujula != origen)
 	{
+		origen = (brujula+2)%4;
 		accion = actFORWARD;
 		cout<<"Avanzo"<<endl;
 	}
