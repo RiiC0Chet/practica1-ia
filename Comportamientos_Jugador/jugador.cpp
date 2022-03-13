@@ -44,12 +44,12 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 		case actTURN_R: // giramos a la derecha
 			brujula = (brujula+1)%4;// ya que trabajamos con 4 valores nada mas
-			girar_derecha = (rand()%2 == 0);
+			girar_izq = (rand()%2 == 0);
 		break;
 
 		case actTURN_L: // giramos a la izquierda
 			brujula = (brujula+3)%4;// ya que trabajamos con 4 valores nada mas y c++ con valores negativos caca,
-			girar_derecha = (rand()%2 == 0);// seria igual si le sumamos 3 ya que va a dar la vuelta al estar en modulo 4
+			girar_izq = (rand()%2 == 0);// seria igual si le sumamos 3 ya que va a dar la vuelta al estar en modulo 4
 		break;						
 
 	}
@@ -72,14 +72,15 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 	// comprobamos que se pueda avanzar
 	if( ( (sensores.terreno[2] == 'T' || sensores.terreno[2] == 'S' || sensores.terreno[2] == 'G' )
-	&& sensores.superficie[2] == '_') && ( brujula != origen  || max_giros > 4 ) && !esta_pintada[fil][col] )
+	&& sensores.superficie[2] == '_') && ( brujula != origen  || max_giros > 4 ) && (!esta_pintada[fil][col] || max_giros > 4 ) )
 	{
 		origen = (brujula+2)%4;
 		accion = actFORWARD;
 		cout<<"Avanzo"<<endl;
 		max_giros = 0;
+		esta_pintada[fil][col] = true;
 	}
-	else if (girar_derecha)
+	else if (girar_izq)
 	{
 		accion = actTURN_L;
 		cout<<"Giro a la izq"<<endl;

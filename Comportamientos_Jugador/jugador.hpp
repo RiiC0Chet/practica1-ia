@@ -14,7 +14,7 @@ class ComportamientoJugador : public Comportamiento{
       brujula = max_giros =0; // max_giros contabiliza el numero de veces que gira sobre si mismo antes de tener que volver sobre sus propios pasos
       origen = (brujula+2)%4; // origen tiene que apuntar al lugar contrario a donde nos dirigimos
       ultimaAccion = actIDLE;
-      girar_derecha = false;
+      girar_izq = false;
       bien_situados = false;
 
       for(int i=0;i<fil;i++)
@@ -34,7 +34,7 @@ class ComportamientoJugador : public Comportamiento{
   // Con origen alamcenamos desde que posicion venimos (para no volver sobre nuestros pasos)
   int fil, col, brujula, origen, max_giros;
   Action ultimaAccion;
-  bool girar_derecha, bien_situados, esta_pintada[99][99];
+  bool girar_izq, bien_situados, esta_pintada[99][99];
 };
 
 #endif
