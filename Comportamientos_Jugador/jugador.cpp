@@ -80,14 +80,50 @@ Action ComportamientoJugador::think(Sensores sensores){
 		max_giros = 0;
 		esta_pintada[fil][col] = true;
 	}
-	else if (girar_izq)
+	else if (girar_izq) // Elegimos aleatoriamente hacia que lado vamos a intentar ir primero
 	{
+		// Comprobamos si podriamos acceder a la diagonal izquiera
+		if(  ( (sensores.terreno[1] == 'T' || sensores.terreno[1] == 'S' || sensores.terreno[1] == 'G' )
+		&& sensores.superficie[1] == '_') )
+		{
+			accion = actTURN_L;
+			cout<<"Giro a la izq"<<endl;
+			max_giros++;
+		} // En caso de que la diagonal izquiera no estuviera disponible intentamos con la derecha
+		else if( ( (sensores.terreno[3] == 'T' || sensores.terreno[3] == 'S' || sensores.terreno[3] == 'G' )
+		&& sensores.superficie[3] == '_')  )
+		{
+			accion = actTURN_R;
+			cout<<"Giro a la der"<<endl;
+			max_giros++;
+		}
+
+		// Si no hay ninguna diagonal disponible ya probamos a girar a la izquiera
 		accion = actTURN_L;
 		cout<<"Giro a la izq"<<endl;
 		max_giros++;
 	}
 	else
 	{
+		// Replicamos lo anterior pero probando primero con la diagonal derecha
+
+		// Comprobamos si podriamos acceder a la diagonal derecha
+		if(  ( (sensores.terreno[3] == 'T' || sensores.terreno[3] == 'S' || sensores.terreno[3] == 'G' )
+		&& sensores.superficie[3] == '_') )
+		{
+			accion = actTURN_R;
+			cout<<"Giro a la der"<<endl;
+			max_giros++;
+		} // En caso de que la diagonal derecha no estuviera disponible intentamos con la izquiera
+		else if( ( (sensores.terreno[1] == 'T' || sensores.terreno[1] == 'S' || sensores.terreno[1] == 'G' )
+		&& sensores.superficie[1] == '_')  )
+		{
+			accion = actTURN_L;
+			cout<<"Giro a la izq"<<endl;
+			max_giros++;
+		}
+
+		// Si no hay ninguna diagonal disponible ya probamos a girar a la derecha
 		accion = actTURN_R;
 		cout<<"Giro a la der"<<endl;
 		max_giros++;
