@@ -57,6 +57,8 @@ Action ComportamientoJugador::think(Sensores sensores){
 	cout<< "fil: "<<fil<<endl;
 	cout<< "col: "<<col<<endl;
 	cout<< "brujula: "<<brujula<<endl;
+	cout<< "origen: "<<origen<<endl;
+	cout<<"Mirando ha :"<<sensores.terreno[2]<<endl;
 
 	if(sensores.terreno[0] == 'G' && !bien_situados)
 	{
@@ -70,21 +72,24 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 	// comprobamos que se pueda avanzar
 	if( ( (sensores.terreno[2] == 'T' || sensores.terreno[2] == 'S' || sensores.terreno[2] == 'G' )
-	&& sensores.superficie[2] == '_') && brujula != origen)
+	&& sensores.superficie[2] == '_') && ( brujula != origen  || max_giros > 4 ) && !esta_pintada[fil][col] )
 	{
 		origen = (brujula+2)%4;
 		accion = actFORWARD;
 		cout<<"Avanzo"<<endl;
+		max_giros = 0;
 	}
 	else if (girar_derecha)
 	{
 		accion = actTURN_L;
 		cout<<"Giro a la izq"<<endl;
+		max_giros++;
 	}
 	else
 	{
 		accion = actTURN_R;
 		cout<<"Giro a la der"<<endl;
+		max_giros++;
 	}
 
 	ultimaAccion = accion;
