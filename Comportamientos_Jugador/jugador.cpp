@@ -54,6 +54,43 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 	}
 
+	/*
+	*	Comprobamos si una casilla es potencial de ser explorada (sin tener en cuenta aun las zonas de agua o bosques)
+	*/
+	bool CasillaPotencial(int pos)
+	{
+		int fila, columna; // fila y columna de la matriz donde se encuentra la casilla
+
+		// Comprobamos en que horientacion esta puesta la brujula para saber cual es la posicion en la matriz de la casilla
+		switch(brujula)
+		{
+			case 0:
+
+			break;
+			case 1:
+
+			break;
+			case 2:
+
+			break;
+			case 3:
+
+			break;
+		}
+
+		if( ( (sensores.terreno[pos] == 'T' || sensores.terreno[pos] == 'S' || sensores.terreno[pos] == 'G' ) && sensores.superficie[pos] == '_') 
+		  	&& (!esta_pintada[fil][col] || max_giros > 4 ) )
+		  	return true;
+		else
+			return false;
+	}
+
+	void mueveHacia(int pos)
+	{
+
+
+	}
+
 	cout<< "fil: "<<fil<<endl;
 	cout<< "col: "<<col<<endl;
 	cout<< "brujula: "<<brujula<<endl;
@@ -72,7 +109,8 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 	// comprobamos que se pueda avanzar
 	if( ( (sensores.terreno[2] == 'T' || sensores.terreno[2] == 'S' || sensores.terreno[2] == 'G' )
-	&& sensores.superficie[2] == '_') && ( brujula != origen  || max_giros > 4 ) && (!esta_pintada[fil][col] || max_giros > 4 ) )
+	&& sensores.superficie[2] == '_') 
+	&& ( brujula != origen  || max_giros > 4 ) && (!esta_pintada[fil][col] || max_giros > 4 ) )
 	{
 		origen = (brujula+2)%4;
 		accion = actFORWARD;
@@ -82,47 +120,13 @@ Action ComportamientoJugador::think(Sensores sensores){
 	}
 	else if (girar_izq) // Elegimos aleatoriamente hacia que lado vamos a intentar ir primero
 	{
-		// Comprobamos si podriamos acceder a la diagonal izquiera
-		if(  ( (sensores.terreno[1] == 'T' || sensores.terreno[1] == 'S' || sensores.terreno[1] == 'G' )
-		&& sensores.superficie[1] == '_') )
-		{
-			accion = actTURN_L;
-			cout<<"Giro a la izq"<<endl;
-			max_giros++;
-		} // En caso de que la diagonal izquiera no estuviera disponible intentamos con la derecha
-		else if( ( (sensores.terreno[3] == 'T' || sensores.terreno[3] == 'S' || sensores.terreno[3] == 'G' )
-		&& sensores.superficie[3] == '_')  )
-		{
-			accion = actTURN_R;
-			cout<<"Giro a la der"<<endl;
-			max_giros++;
-		}
-
 		// Si no hay ninguna diagonal disponible ya probamos a girar a la izquiera
 		accion = actTURN_L;
 		cout<<"Giro a la izq"<<endl;
 		max_giros++;
 	}
 	else
-	{
-		// Replicamos lo anterior pero probando primero con la diagonal derecha
-
-		// Comprobamos si podriamos acceder a la diagonal derecha
-		if(  ( (sensores.terreno[3] == 'T' || sensores.terreno[3] == 'S' || sensores.terreno[3] == 'G' )
-		&& sensores.superficie[3] == '_') )
-		{
-			accion = actTURN_R;
-			cout<<"Giro a la der"<<endl;
-			max_giros++;
-		} // En caso de que la diagonal derecha no estuviera disponible intentamos con la izquiera
-		else if( ( (sensores.terreno[1] == 'T' || sensores.terreno[1] == 'S' || sensores.terreno[1] == 'G' )
-		&& sensores.superficie[1] == '_')  )
-		{
-			accion = actTURN_L;
-			cout<<"Giro a la izq"<<endl;
-			max_giros++;
-		}
-
+	{	
 		// Si no hay ninguna diagonal disponible ya probamos a girar a la derecha
 		accion = actTURN_R;
 		cout<<"Giro a la der"<<endl;
