@@ -2,8 +2,6 @@
 #include <iostream>
 using namespace std;
 
-
-
 Action ComportamientoJugador::think(Sensores sensores){
 
 	Action accion = actIDLE;
@@ -54,42 +52,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 	}
 
-	/*
-	*	Comprobamos si una casilla es potencial de ser explorada (sin tener en cuenta aun las zonas de agua o bosques)
-	*/
-	bool CasillaPotencial(int pos)
-	{
-		int fila, columna; // fila y columna de la matriz donde se encuentra la casilla
-
-		// Comprobamos en que horientacion esta puesta la brujula para saber cual es la posicion en la matriz de la casilla
-		switch(brujula)
-		{
-			case 0:
-
-			break;
-			case 1:
-
-			break;
-			case 2:
-
-			break;
-			case 3:
-
-			break;
-		}
-
-		if( ( (sensores.terreno[pos] == 'T' || sensores.terreno[pos] == 'S' || sensores.terreno[pos] == 'G' ) && sensores.superficie[pos] == '_') 
-		  	&& (!esta_pintada[fil][col] || max_giros > 4 ) )
-		  	return true;
-		else
-			return false;
-	}
-
-	void mueveHacia(int pos)
-	{
-
-
-	}
+	
 
 	cout<< "fil: "<<fil<<endl;
 	cout<< "col: "<<col<<endl;
@@ -125,6 +88,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 		cout<<"Giro a la izq"<<endl;
 		max_giros++;
 	}
+	
 	else
 	{	
 		// Si no hay ninguna diagonal disponible ya probamos a girar a la derecha
