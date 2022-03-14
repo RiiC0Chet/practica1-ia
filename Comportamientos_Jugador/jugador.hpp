@@ -17,6 +17,8 @@ class ComportamientoJugador : public Comportamiento{
       girar_izq = false;
       bien_situados = false;
 
+      paredEncontrad = false;
+
       for(int i=0;i<fil;i++)
         for(int j=0;j<col;j++)
           esta_pintada[i][j] = false;
@@ -33,14 +35,18 @@ class ComportamientoJugador : public Comportamiento{
   // Declarar aquí las variables de estado
   // Con origen alamcenamos desde que posicion venimos (para no volver sobre nuestros pasos)
 
-  const int MAX_FILAS = MAX_COLUMNAS = 99;
+  const static int MAX_FILAS = 99, MAX_COLUMNAS = 99;
 
   int fil, col, brujula, origen, max_giros;
   Action ultimaAccion;
-  bool girar_izq, bien_situados, esta_pintada[MAX_FILAS][MAX_COLUMNAS];
+  bool girar_izq, // Con girar_izq comprobamos si hay que girar a la izquierda para no salirse de la pared
+        bien_situados, 
+        esta_pintada[MAX_FILAS][MAX_COLUMNAS];
+
+  bool paredEncontrad; // Comporbamos si hemos encontrado pared y estamos pegados para ir mirando si esta se acaba
 
   // Creamos un vector con las siguientes acciones a realizar por el personaje
-  vector <Action> cadenaAcciones(MAX_FILAS);
+  vector <Action> cadenaAcciones();
 };
 
 #endif
