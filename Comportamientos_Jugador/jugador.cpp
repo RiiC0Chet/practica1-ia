@@ -59,7 +59,13 @@ Action ComportamientoJugador::think(Sensores sensores){
 	cout<< "brujula: "<<brujula<<endl;
 	cout<< "origen: "<<origen<<endl;
 	cout<<"Mirando ha :"<<sensores.terreno[2]<<endl;
-	cout<<"paredEncontrada"<<paredEncontrad<<endl;
+	
+	if (paredEncontrad){
+		cout<<"paredEncontrada es true "<<endl;
+	} else {
+		cout<<"paredEncontrada es false "<<endl;
+
+	}
 
 	if(sensores.terreno[0] == 'G' && !bien_situados)
 	{
@@ -132,7 +138,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 				// Almacenamos la posicion
 				esta_pintada[fil][col] = true;
 
-				cout<<"Aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"<<endl;
+				cout<<"chupalax2"<<endl;
 				girar_izq = true;
 			}
 			else // Si no es el caso avanzamos normal
@@ -150,7 +156,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 		// En caso de que la pared no estuviera encontrada ya la marcamos como encontrada
 		if(!paredEncontrad)
 		{
-			//paredEncontrad = true;
+			// paredEncontrad = true;
 			cout<<"WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"<<endl;
 		}
 			
