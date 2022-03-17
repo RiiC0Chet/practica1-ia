@@ -33,10 +33,10 @@ Action ComportamientoJugador::think(Sensores sensores){
 		case actFORWARD: // si mi utima accion fue ir para delante
 			switch(brujula)
 			{
-				case 0 : fil--; break;
-				case 1 : col++; break;
-				case 2 : fil++; break;
-				case 3 : col--; break;
+				case 0 : fil--; fil_aux--; break;
+				case 1 : col++; col_aux++;  break;
+				case 2 : fil++; fil_aux++;break;
+				case 3 : col--; col_aux--;break;
 			}
 		break;
 
@@ -74,122 +74,123 @@ Action ComportamientoJugador::think(Sensores sensores){
 		bien_situados = true;
 	}
 
-	if(bien_situados)
+	if(sensores.terreno[0] == 'D')
 	{
-		//mapaResultado[fil][col] = sensores.terreno[0];
-		
+		zapatillas = true;
+	}
+
+	if(sensores.terreno[0] == 'K')
+	{
+		bikini = true;
+	}
+
+	if (bien_situados)
+	{
+		// mapaResultado[fil][col] = sensores.terreno[0];
+
+		switch (brujula)
+		{
+		case 0:
+			mapaResultado[fil][col] = sensores.terreno[0];
+			mapaResultado[fil - 1][col - 1] = sensores.terreno[1];
+			mapaResultado[fil - 1][col] = sensores.terreno[2];
+			mapaResultado[fil - 1][col + 1] = sensores.terreno[3];
+			mapaResultado[fil - 2][col - 2] = sensores.terreno[4];
+			mapaResultado[fil - 2][col - 1] = sensores.terreno[5];
+			mapaResultado[fil - 2][col] = sensores.terreno[6];
+			mapaResultado[fil - 2][col + 1] = sensores.terreno[7];
+			mapaResultado[fil - 2][col + 2] = sensores.terreno[8];
+			mapaResultado[fil - 3][col - 3] = sensores.terreno[9];
+			mapaResultado[fil - 3][col - 2] = sensores.terreno[10];
+			mapaResultado[fil - 3][col - 1] = sensores.terreno[11];
+			mapaResultado[fil - 3][col] = sensores.terreno[12];
+			mapaResultado[fil - 3][col + 1] = sensores.terreno[13];
+			mapaResultado[fil - 3][col + 2] = sensores.terreno[14];
+			mapaResultado[fil - 3][col + 3] = sensores.terreno[15];
+
+			break;
+
+		case 1:
+			mapaResultado[fil][col] = sensores.terreno[0];
+			mapaResultado[fil - 1][col + 1] = sensores.terreno[1];
+			mapaResultado[fil][col + 1] = sensores.terreno[2];
+			mapaResultado[fil + 1][col + 1] = sensores.terreno[3];
+			mapaResultado[fil - 2][col + 2] = sensores.terreno[4];
+			mapaResultado[fil - 1][col + 2] = sensores.terreno[5];
+			mapaResultado[fil][col + 2] = sensores.terreno[6];
+			mapaResultado[fil + 1][col + 2] = sensores.terreno[7];
+			mapaResultado[fil + 2][col + 2] = sensores.terreno[8];
+			mapaResultado[fil - 3][col + 3] = sensores.terreno[9];
+			mapaResultado[fil - 2][col + 3] = sensores.terreno[10];
+			mapaResultado[fil - 1][col + 3] = sensores.terreno[11];
+			mapaResultado[fil][col + 3] = sensores.terreno[12];
+			mapaResultado[fil + 1][col + 3] = sensores.terreno[13];
+			mapaResultado[fil + 2][col + 3] = sensores.terreno[14];
+			mapaResultado[fil + 3][col + 3] = sensores.terreno[15];
+
+			break;
+
+		case 2:
+			mapaResultado[fil][col] = sensores.terreno[0];
+			mapaResultado[fil + 1][col + 1] = sensores.terreno[1];
+			mapaResultado[fil + 1][col] = sensores.terreno[2];
+			mapaResultado[fil + 1][col - 1] = sensores.terreno[3];
+			mapaResultado[fil + 2][col + 2] = sensores.terreno[4];
+			mapaResultado[fil + 2][col + 1] = sensores.terreno[5];
+			mapaResultado[fil + 2][col] = sensores.terreno[6];
+			mapaResultado[fil + 2][col - 1] = sensores.terreno[7];
+			mapaResultado[fil + 2][col - 2] = sensores.terreno[8];
+			mapaResultado[fil + 3][col + 3] = sensores.terreno[9];
+			mapaResultado[fil + 3][col + 2] = sensores.terreno[10];
+			mapaResultado[fil + 3][col + 1] = sensores.terreno[11];
+			mapaResultado[fil + 3][col] = sensores.terreno[12];
+			mapaResultado[fil + 3][col - 1] = sensores.terreno[13];
+			mapaResultado[fil + 3][col - 2] = sensores.terreno[14];
+			mapaResultado[fil + 3][col - 3] = sensores.terreno[15];
+
+			break;
+		case 3:
+			mapaResultado[fil][col] = sensores.terreno[0];
+			mapaResultado[fil + 1][col - 1] = sensores.terreno[1];
+			mapaResultado[fil][col - 1] = sensores.terreno[2];
+			mapaResultado[fil - 1][col - 1] = sensores.terreno[3];
+			mapaResultado[fil + 2][col - 2] = sensores.terreno[4];
+			mapaResultado[fil + 1][col - 2] = sensores.terreno[5];
+			mapaResultado[fil][col - 2] = sensores.terreno[6];
+			mapaResultado[fil - 1][col - 2] = sensores.terreno[7];
+			mapaResultado[fil - 2][col - 2] = sensores.terreno[8];
+			mapaResultado[fil + 3][col - 3] = sensores.terreno[9];
+			mapaResultado[fil + 2][col - 3] = sensores.terreno[10];
+			mapaResultado[fil + 1][col - 3] = sensores.terreno[11];
+			mapaResultado[fil][col - 3] = sensores.terreno[12];
+			mapaResultado[fil - 1][col - 3] = sensores.terreno[13];
+			mapaResultado[fil - 2][col - 3] = sensores.terreno[14];
+			mapaResultado[fil - 3][col - 3] = sensores.terreno[15];
+
+			break;
+		}
+	}
+
+	// Antes de girar a la izquierda o avanzar comprobamos que no hubieramos visitado ya esa posicion
 	switch (brujula)
 	{
-	case 0:
-	 mapaResultado[fil][col] = sensores.terreno[0];
-	 mapaResultado[fil - 1][col - 1]= sensores.terreno[1];
-	 mapaResultado[fil - 1][col]= sensores.terreno[2];
-	 mapaResultado[fil - 1][col + 1]= sensores.terreno[3];
-	 mapaResultado[fil - 2][col - 2]= sensores.terreno[4];
-	 mapaResultado[fil - 2][col - 1]= sensores.terreno[5];
-	 mapaResultado[fil - 2][col]= sensores.terreno[6];
-	 mapaResultado[fil - 2][col + 1]= sensores.terreno[7];
-	 mapaResultado[fil - 2][col + 2]= sensores.terreno[8];
-	 mapaResultado[fil - 3][col - 3]= sensores.terreno[9];
-	 mapaResultado[fil - 3][col - 2]= sensores.terreno[10];
-	 mapaResultado[fil - 3][col - 1]= sensores.terreno[11];
-	 mapaResultado[fil - 3][col]= sensores.terreno[12];
-	 mapaResultado[fil - 3][col + 1]= sensores.terreno[13];
-	 mapaResultado[fil - 3][col + 2]= sensores.terreno[14];
-	 mapaResultado[fil - 3][col + 3]= sensores.terreno[15];
-
-	break;
-
-	case 1:
-	 mapaResultado[fil][col]= sensores.terreno[0];
-	 mapaResultado[fil - 1][col + 1]= sensores.terreno[1];
-	 mapaResultado[fil][col + 1]= sensores.terreno[2];
-	 mapaResultado[fil + 1][col + 1]= sensores.terreno[3];
-	 mapaResultado[fil - 2][col + 2]= sensores.terreno[4];
-	 mapaResultado[fil - 1][col + 2]= sensores.terreno[5];
-	 mapaResultado[fil][col + 2]= sensores.terreno[6];
-	 mapaResultado[fil + 1][col + 2]= sensores.terreno[7];
-	 mapaResultado[fil + 2][col + 2]= sensores.terreno[8];
-	 mapaResultado[fil - 3][col + 3]= sensores.terreno[9];
-	 mapaResultado[fil - 2][col + 3]= sensores.terreno[10];
-	 mapaResultado[fil - 1][col + 3]= sensores.terreno[11];
-	 mapaResultado[fil][col + 3]= sensores.terreno[12];
-	 mapaResultado[fil + 1][col + 3]= sensores.terreno[13];
-	 mapaResultado[fil + 2][col + 3]= sensores.terreno[14];
-	 mapaResultado[fil + 3][col + 3]= sensores.terreno[15];
-
-	break;
-
-	case 2:
-	 mapaResultado[fil][col]= sensores.terreno[0];
-	 mapaResultado[fil + 1][col + 1]= sensores.terreno[1];
-	 mapaResultado[fil + 1][col]= sensores.terreno[2];
-	 mapaResultado[fil + 1][col - 1]= sensores.terreno[3];
-	 mapaResultado[fil + 2][col + 2]= sensores.terreno[4];
-	 mapaResultado[fil + 2][col + 1]= sensores.terreno[5];
-	 mapaResultado[fil + 2][col]= sensores.terreno[6];
-	 mapaResultado[fil + 2][col - 1]= sensores.terreno[7];
-	 mapaResultado[fil + 2][col - 2]= sensores.terreno[8];
-	 mapaResultado[fil + 3][col + 3]= sensores.terreno[9];
-	 mapaResultado[fil + 3][col + 2]= sensores.terreno[10];
-	 mapaResultado[fil + 3][col + 1]= sensores.terreno[11];
-	 mapaResultado[fil + 3][col]= sensores.terreno[12];
-	 mapaResultado[fil + 3][col - 1]= sensores.terreno[13];
-	 mapaResultado[fil + 3][col - 2]= sensores.terreno[14];
-	 mapaResultado[fil + 3][col - 3]= sensores.terreno[15];
-
-	break;
-	case 3:
-	 mapaResultado[fil][col]= sensores.terreno[0];
-	 mapaResultado[fil + 1][col - 1]= sensores.terreno[1];
-	 mapaResultado[fil][col - 1]= sensores.terreno[2];
-	 mapaResultado[fil - 1][col - 1]= sensores.terreno[3];
-	 mapaResultado[fil + 2][col - 2]= sensores.terreno[4];
-	 mapaResultado[fil + 1][col - 2]= sensores.terreno[5];
-	 mapaResultado[fil][col - 2]= sensores.terreno[6];
-	 mapaResultado[fil - 1][col - 2]= sensores.terreno[7];
-	 mapaResultado[fil - 2][col - 2]= sensores.terreno[8];
-	 mapaResultado[fil + 3][col - 3]= sensores.terreno[9];
-	 mapaResultado[fil + 2][col - 3]= sensores.terreno[10];
-	 mapaResultado[fil + 1][col - 3]= sensores.terreno[11];
-	 mapaResultado[fil][col - 3]= sensores.terreno[12];
-	 mapaResultado[fil - 1][col - 3]= sensores.terreno[13];
-	 mapaResultado[fil - 2][col - 3]= sensores.terreno[14];
-	 mapaResultado[fil - 3][col - 3]= sensores.terreno[15];
-
-	break;
+		case 0:
+			ya_visitada = ciclo_anterior[fil_aux - 1][col_aux - 1];
+			ya_visitada_enfrente = ciclo_anterior[fil_aux - 1][col_aux];
+		break;
+		case 1:
+			ya_visitada = ciclo_anterior[fil_aux - 1][col_aux + 1];
+			ya_visitada_enfrente = ciclo_anterior[fil_aux][col_aux + 1];
+		break;
+		case 2:
+			ya_visitada = ciclo_anterior[fil_aux + 1][col_aux + 1];
+			ya_visitada_enfrente = ciclo_anterior[fil_aux + 1][col_aux];
+		break;
+		case 3:
+			ya_visitada = ciclo_anterior[fil_aux + 1][col_aux - 1];
+			ya_visitada_enfrente = ciclo_anterior[fil_aux][col_aux - 1];
+		break;
 	}
-	}
-		
-
-	/*
-	// comprobamos que se pueda avanzar
-	if( ( (sensores.terreno[2] == 'T' || sensores.terreno[2] == 'S' || sensores.terreno[2] == 'G' )
-	&& sensores.superficie[2] == '_') 
-	&& ( brujula != origen  || max_giros > 4 ) && (!esta_pintada[fil][col] || max_giros > 4 ) )
-	{
-		origen = (brujula+2)%4;
-		accion = actFORWARD;
-		cout<<"Avanzo"<<endl;
-		max_giros = 0;
-		esta_pintada[fil][col] = true;
-	}
-	else if (girar_izq) // Elegimos aleatoriamente hacia que lado vamos a intentar ir primero
-	{
-		// Si no hay ninguna diagonal disponible ya probamos a girar a la izquiera
-		accion = actTURN_L;
-		cout<<"Giro a la izq"<<endl;
-		max_giros++;
-	}
-	
-	else
-	{	
-		// Si no hay ninguna diagonal disponible ya probamos a girar a la derecha
-		accion = actTURN_R;
-		cout<<"Giro a la der"<<endl;
-		max_giros++;
-	}
-	*/
 
 	if(girar_izq) // Solo esta activado si hay que girar obligatoriamente porque nos vamos a despegar de la pared
 	{
@@ -199,7 +200,17 @@ Action ComportamientoJugador::think(Sensores sensores){
 		// Ponemos el girar_izq a false otra vez
 		girar_izq = false;
 	}
-	else if( (sensores.terreno[2] == 'T' || sensores.terreno[2] == 'S' || sensores.terreno[2] == 'G' ) && sensores.superficie[2] == '_')// Comprobamos si podriamos avanzar hacia delante
+	else if(girar_der)
+	{
+		accion = actTURN_R;
+		cout<<"Giro a la der aqui"<<endl;
+
+		// Ponemos el girar_izq a false otra vez
+		girar_der = false;
+	}
+	else if( (sensores.terreno[2] == 'T' || sensores.terreno[2] == 'S' || sensores.terreno[2] == 'G' 
+	|| sensores.terreno[2] == 'D' || sensores.terreno[2] == 'K' || sensores.terreno[2] == 'X' ) 
+	&& sensores.superficie[2] == '_' && !ya_visitada_enfrente)// Comprobamos si podriamos avanzar hacia delante
 	{
 		// Comprobamos si estamos pegados a una pared o no para fijarnos como continua esta
 		if(!paredEncontrad)
@@ -208,23 +219,55 @@ Action ComportamientoJugador::think(Sensores sensores){
 			cout<<"Avanzo"<<endl;
 
 			// Almacenamos la posicion
-			//esta_pintada[fil][col] = true;
+			esta_pintada[fil_aux][col_aux] = true;
 		}
 		else // En caso de que estemos en pared antes de avanzar nos fijamos en comon continua esta
 		{
+			// Si es la primera vez que chocamso con una pared almacenamos la posicion para saber cuando hemos dado una vuelta
+			if(primeraPared)
+			{
+				primeraPared = false;
+				principio_fil = fil_aux;
+				principio_col = col_aux;
+			}
+			else // Si no es la primera vez que nos chocamos con una pared comprobamos cuando damos la vuelta
+			{
+				if(fil_aux == principio_fil && col_aux == principio_col)
+				{
+					girar_der = true;
+					principio_fil = fil_aux+1;
+					principio_fil = col_aux-1;
+					//final_ciclo = true;
+					for (int i = 0; i < MAX_FILAS; i++)
+					{
+						for (int j = 0; j < MAX_COLUMNAS; j++)
+						{
+							ciclo_anterior[i][j] = esta_pintada[i][j];
+						}
+					}
+				}
+				else
+				{
+					//final_ciclo = false;
+				}
+			}
+
 			// Comprobamos si el hueco [1] podria ser accesible o no ya que eso marcaria cambio en pared y habria que girar a la izquierda
 			// (suponiendo que nos movemos siempre hacia la derecha)
-			if( (sensores.terreno[1] == 'T' || sensores.terreno[1] == 'S' || sensores.terreno[1] == 'G' ) && sensores.superficie[1] == '_')
+			if( (sensores.terreno[1] == 'T' || sensores.terreno[1] == 'S' || sensores.terreno[1] == 'G' 
+			|| sensores.terreno[1] == 'D' || sensores.terreno[1] == 'K' || sensores.terreno[1] == 'X' ) && sensores.superficie[1] == '_')
 			{
 				// Hay que avanzar y luego girar izq
 				accion = actFORWARD;
 				cout<<"Avanzo"<<endl;
 
 				// Almacenamos la posicion
-				//esta_pintada[fil][col] = true;
+				esta_pintada[fil_aux][col_aux] = true;
 
-				cout<<"chupalax2"<<endl;
-				girar_izq = true;
+				
+
+				if(!ya_visitada )//|| !final_ciclo)
+					girar_izq = true;
 			}
 			else // Si no es el caso avanzamos normal
 			{
@@ -232,7 +275,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 				cout<<"Avanzo"<<endl;
 
 				// Almacenamos la posicion
-				esta_pintada[fil][col] = true;
+				esta_pintada[fil_aux][col_aux] = true;
 			}
 		}
 	}
@@ -242,7 +285,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 		if(!paredEncontrad)
 		{
 			paredEncontrad = true;
-			cout<<"WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"<<endl;
+			//cout<<"WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"<<endl;
 		}
 			
 
