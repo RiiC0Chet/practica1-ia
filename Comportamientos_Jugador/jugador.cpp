@@ -75,7 +75,92 @@ Action ComportamientoJugador::think(Sensores sensores){
 	}
 
 	if(bien_situados)
-		mapaResultado[fil][col] = sensores.terreno[0];
+	{
+		//mapaResultado[fil][col] = sensores.terreno[0];
+		
+	switch (brujula)
+	{
+	case 0:
+	 mapaResultado[fil][col] = sensores.terreno[0];
+	 mapaResultado[fil - 1][col - 1]= sensores.terreno[1];
+	 mapaResultado[fil - 1][col]= sensores.terreno[2];
+	 mapaResultado[fil - 1][col + 1]= sensores.terreno[3];
+	 mapaResultado[fil - 2][col - 2]= sensores.terreno[4];
+	 mapaResultado[fil - 2][col - 1]= sensores.terreno[5];
+	 mapaResultado[fil - 2][col]= sensores.terreno[6];
+	 mapaResultado[fil - 2][col + 1]= sensores.terreno[7];
+	 mapaResultado[fil - 2][col + 2]= sensores.terreno[8];
+	 mapaResultado[fil - 3][col - 3]= sensores.terreno[9];
+	 mapaResultado[fil - 3][col - 2]= sensores.terreno[10];
+	 mapaResultado[fil - 3][col - 1]= sensores.terreno[11];
+	 mapaResultado[fil - 3][col]= sensores.terreno[12];
+	 mapaResultado[fil - 3][col + 1]= sensores.terreno[13];
+	 mapaResultado[fil - 3][col + 2]= sensores.terreno[14];
+	 mapaResultado[fil - 3][col + 3]= sensores.terreno[15];
+
+	break;
+
+	case 1:
+	 mapaResultado[fil][col]= sensores.terreno[0];
+	 mapaResultado[fil - 1][col + 1]= sensores.terreno[1];
+	 mapaResultado[fil][col + 1]= sensores.terreno[2];
+	 mapaResultado[fil + 1][col + 1]= sensores.terreno[3];
+	 mapaResultado[fil - 2][col + 2]= sensores.terreno[4];
+	 mapaResultado[fil - 1][col + 2]= sensores.terreno[5];
+	 mapaResultado[fil][col + 2]= sensores.terreno[6];
+	 mapaResultado[fil + 1][col + 2]= sensores.terreno[7];
+	 mapaResultado[fil + 2][col + 2]= sensores.terreno[8];
+	 mapaResultado[fil - 3][col + 3]= sensores.terreno[9];
+	 mapaResultado[fil - 2][col + 3]= sensores.terreno[10];
+	 mapaResultado[fil - 1][col + 3]= sensores.terreno[11];
+	 mapaResultado[fil][col + 3]= sensores.terreno[12];
+	 mapaResultado[fil + 1][col + 3]= sensores.terreno[13];
+	 mapaResultado[fil + 2][col + 3]= sensores.terreno[14];
+	 mapaResultado[fil + 3][col + 3]= sensores.terreno[15];
+
+	break;
+
+	case 2:
+	 mapaResultado[fil][col]= sensores.terreno[0];
+	 mapaResultado[fil + 1][col + 1]= sensores.terreno[1];
+	 mapaResultado[fil + 1][col]= sensores.terreno[2];
+	 mapaResultado[fil + 1][col - 1]= sensores.terreno[3];
+	 mapaResultado[fil + 2][col + 2]= sensores.terreno[4];
+	 mapaResultado[fil + 2][col + 1]= sensores.terreno[5];
+	 mapaResultado[fil + 2][col]= sensores.terreno[6];
+	 mapaResultado[fil + 2][col - 1]= sensores.terreno[7];
+	 mapaResultado[fil + 2][col - 2]= sensores.terreno[8];
+	 mapaResultado[fil + 3][col + 3]= sensores.terreno[9];
+	 mapaResultado[fil + 3][col + 2]= sensores.terreno[10];
+	 mapaResultado[fil + 3][col + 1]= sensores.terreno[11];
+	 mapaResultado[fil + 3][col]= sensores.terreno[12];
+	 mapaResultado[fil + 3][col - 1]= sensores.terreno[13];
+	 mapaResultado[fil + 3][col - 2]= sensores.terreno[14];
+	 mapaResultado[fil + 3][col - 3]= sensores.terreno[15];
+
+	break;
+	case 3:
+	 mapaResultado[fil][col]= sensores.terreno[0];
+	 mapaResultado[fil + 1][col - 1]= sensores.terreno[1];
+	 mapaResultado[fil][col - 1]= sensores.terreno[2];
+	 mapaResultado[fil - 1][col - 1]= sensores.terreno[3];
+	 mapaResultado[fil + 2][col - 2]= sensores.terreno[4];
+	 mapaResultado[fil + 1][col - 2]= sensores.terreno[5];
+	 mapaResultado[fil][col - 2]= sensores.terreno[6];
+	 mapaResultado[fil - 1][col - 2]= sensores.terreno[7];
+	 mapaResultado[fil - 2][col - 2]= sensores.terreno[8];
+	 mapaResultado[fil + 3][col - 3]= sensores.terreno[9];
+	 mapaResultado[fil + 2][col - 3]= sensores.terreno[10];
+	 mapaResultado[fil + 1][col - 3]= sensores.terreno[11];
+	 mapaResultado[fil][col - 3]= sensores.terreno[12];
+	 mapaResultado[fil - 1][col - 3]= sensores.terreno[13];
+	 mapaResultado[fil - 2][col - 3]= sensores.terreno[14];
+	 mapaResultado[fil - 3][col - 3]= sensores.terreno[15];
+
+	break;
+	}
+	}
+		
 
 	/*
 	// comprobamos que se pueda avanzar
@@ -123,7 +208,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 			cout<<"Avanzo"<<endl;
 
 			// Almacenamos la posicion
-			esta_pintada[fil][col] = true;
+			//esta_pintada[fil][col] = true;
 		}
 		else // En caso de que estemos en pared antes de avanzar nos fijamos en comon continua esta
 		{
@@ -156,7 +241,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 		// En caso de que la pared no estuviera encontrada ya la marcamos como encontrada
 		if(!paredEncontrad)
 		{
-			// paredEncontrad = true;
+			paredEncontrad = true;
 			cout<<"WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"<<endl;
 		}
 			
@@ -174,6 +259,6 @@ Action ComportamientoJugador::think(Sensores sensores){
 	return accion;
 }
 
-int ComportamientoJugador::interact(Action accion, int valor){
+int ComportamientoJugador::interact(Action accion,int valor){
   return false;
 }
