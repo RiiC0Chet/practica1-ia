@@ -221,7 +221,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 				cout<<"Avanzo"<<endl;
 
 				// Almacenamos la posicion
-				esta_pintada[fil][col] = true;
+				//esta_pintada[fil][col] = true;
 
 				cout<<"chupalax2"<<endl;
 				girar_izq = true;
