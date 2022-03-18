@@ -48,7 +48,7 @@ class ComportamientoJugador : public Comportamiento{
     /*
       Comprobamos si podemos avanzar hasta esa posicion del sensor
     */
-    bool puedoPisar(int pos);
+    bool puedoPisar(int pos, Sensores sensores);
 
 
     Action think(Sensores sensores);
