@@ -40,6 +40,17 @@ class ComportamientoJugador : public Comportamiento{
     ComportamientoJugador(const ComportamientoJugador & comport) : Comportamiento(comport){}
     ~ComportamientoJugador(){}
 
+    /*
+      Movemos al personaje hasta una posicion concreta y hacemos que vuelva a donde estaba
+    */
+    void irHasta(int filas, int columnas);
+
+    /*
+      Comprobamos si podemos avanzar hasta esa posicion del sensor
+    */
+    bool puedoPisar(int pos);
+
+
     Action think(Sensores sensores);
     int interact(Action accion, int valor);
 
@@ -68,7 +79,7 @@ class ComportamientoJugador : public Comportamiento{
        bikini,
        zapatillas;
   // Creamos un vector con las siguientes acciones a realizar por el personaje
-  vector <Action> cadenaAcciones();
+  vector <Action> cadenaAcciones;
 };
 
 #endif
