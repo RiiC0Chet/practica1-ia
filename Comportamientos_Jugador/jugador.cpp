@@ -7,18 +7,28 @@ void ComportamientoJugador::irHasta(int filas, int columnas)
 	int dif_filas = filas - fil, // Si es negativo queremos subir 
 		dif_columnas = columnas - col; // Si es negativo a la izq
 
+	int brujula_aux = brujula; // brujula auxiliar para los while
+
 	//Si es negativo giramos hasta estas ubicados al norte
 	if(dif_filas < 0)
 	{
-		while(brujula != 0)
+		while(brujula_aux != 0) // bucle infinito
+		{
 			cadenaAcciones.push_back(actTURN_R);
+			brujula_aux = (brujula_aux+1)%4;
+		}
+			
 
 		dif_filas = dif_filas * (-1);
 	}
 	else //Si es positivo giramos hasta estas ubicados al sur
 	{
-		while(brujula != 2)
+		while(brujula_aux != 2)
+		{
 			cadenaAcciones.push_back(actTURN_R);
+			brujula_aux = (brujula_aux+1)%4;
+		}
+			
 	}
 		
 	for(int i = 0;i < dif_filas;i++)
@@ -27,15 +37,23 @@ void ComportamientoJugador::irHasta(int filas, int columnas)
 	//Si es negativo giramos hasta estas ubicados al oeste
 	if(dif_filas < 0)
 	{
-		while(brujula != 1)
+		while(brujula_aux != 1)
+		{
 			cadenaAcciones.push_back(actTURN_R);
+			brujula_aux = (brujula_aux+1)%4;
+		}
+			
 
 		dif_columnas = dif_columnas * (-1);
 	}
 	else //Si es positivo giramos hasta estas ubicados al este
 	{
-		while(brujula != 3)
+		while(brujula_aux != 3)
+		{
 			cadenaAcciones.push_back(actTURN_R);
+			brujula_aux = (brujula_aux+1)%4;
+		}
+			
 	}
 
 
@@ -141,14 +159,14 @@ Action ComportamientoJugador::think(Sensores sensores){
 		bien_situados = true;
 	}
 
-	if(sensores.terreno[0] == 'D')
+	if(sensores.terreno[0] == 'D' && !zapatillas)
 	{
 		zapatillas = true;
 		paredEncontrad = false;
 		primeraPared = true;
 	}
 
-	if(sensores.terreno[0] == 'K')
+	if(sensores.terreno[0] == 'K' && !bikini)
 	{
 		bikini = true;
 		paredEncontrad = false;
@@ -614,17 +632,17 @@ Action ComportamientoJugador::think(Sensores sensores){
 				if (sensores.terreno[i] == 'G' && !bien_situados)
 				{
 					irHasta(fila_aux,columna_aux);
-					irHasta(fil,col);
+					//irHasta(fil,col);
 				}
 				else if (sensores.terreno[i] == 'A' && !bikini)
 				{
-					irHasta(fila_aux,columna_aux);
-					irHasta(fil,col);
+					//irHasta(fila_aux,columna_aux);
+					//irHasta(fil,col);
 				}
 				if (sensores.terreno[i] == 'B' && !zapatillas)
 				{
-					irHasta(fila_aux,columna_aux);
-					irHasta(fil,col);
+					//irHasta(fila_aux,columna_aux);
+					//irHasta(fil,col);
 				}
 			}
 		}
