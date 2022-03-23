@@ -12,7 +12,7 @@ void ComportamientoJugador::irHasta(int filas, int columnas)
 	//Si es negativo giramos hasta estas ubicados al norte
 	if(dif_filas < 0)
 	{
-		while(brujula_aux != 0) // bucle infinito
+		while(brujula_aux != 0) 
 		{
 			cadenaAcciones.push_back(actTURN_R);
 			brujula_aux = (brujula_aux+1)%4;
@@ -35,9 +35,9 @@ void ComportamientoJugador::irHasta(int filas, int columnas)
 		cadenaAcciones.push_back(actFORWARD);
 
 	//Si es negativo giramos hasta estas ubicados al oeste
-	if(dif_filas < 0)
+	if(dif_columnas < 0)
 	{
-		while(brujula_aux != 1)
+		while(brujula_aux != 3)
 		{
 			cadenaAcciones.push_back(actTURN_R);
 			brujula_aux = (brujula_aux+1)%4;
@@ -48,7 +48,7 @@ void ComportamientoJugador::irHasta(int filas, int columnas)
 	}
 	else //Si es positivo giramos hasta estas ubicados al este
 	{
-		while(brujula_aux != 3)
+		while(brujula_aux != 1)
 		{
 			cadenaAcciones.push_back(actTURN_R);
 			brujula_aux = (brujula_aux+1)%4;
@@ -282,11 +282,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 
 	
-
-	// Comprobamos antes de nada si tenemos acciones pendietes en el vector
-	if (cadenaAcciones.empty())
-	{
-		// Comprobammos con los sensores si estamos viendo alguna de estas casillas
+// Comprobammos con los sensores si estamos viendo alguna de estas casillas
 		if (!bikini || !zapatillas || !bien_situados)
 		{
 			// Definimos las dos variables locales que nos serviran para representar las posiciones del cada casilla del sensor en el mapa
@@ -631,22 +627,37 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 				if (sensores.terreno[i] == 'G' && !bien_situados)
 				{
+					cout<<"      .............           "<<i<<" "<<fila_aux<<" "<<columna_aux<<endl;
 					irHasta(fila_aux,columna_aux);
 					//irHasta(fil,col);
 				}
 				else if (sensores.terreno[i] == 'A' && !bikini)
 				{
-					//irHasta(fila_aux,columna_aux);
+					irHasta(fila_aux,columna_aux);
 					//irHasta(fil,col);
 				}
 				if (sensores.terreno[i] == 'B' && !zapatillas)
 				{
-					//irHasta(fila_aux,columna_aux);
+					irHasta(fila_aux,columna_aux);
 					//irHasta(fil,col);
 				}
 			}
 		}
 
+
+
+
+
+
+
+
+
+
+
+	// Comprobamos antes de nada si tenemos acciones pendietes en el vector
+	if (cadenaAcciones.empty())
+	{
+		
 		if (girar_izq) // Solo esta activado si hay que girar obligatoriamente porque nos vamos a despegar de la pared
 		{
 			accion = actTURN_L;
