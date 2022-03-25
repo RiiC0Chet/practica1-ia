@@ -46,7 +46,7 @@ class ComportamientoJugador : public Comportamiento{
     /*
       Movemos al personaje hasta una posicion concreta y hacemos que vuelva a donde estaba
     */
-    void irHasta(int filas, int columnas);
+    void irHasta(int filas_inicio, int columnas_inicio,int filas, int columnas);
 
     /*
       Comprobamos si podemos avanzar hasta esa posicion del sensor

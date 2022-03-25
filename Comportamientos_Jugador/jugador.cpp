@@ -2,10 +2,10 @@
 #include <iostream>
 using namespace std;
 
-void ComportamientoJugador::irHasta(int filas, int columnas)
+void ComportamientoJugador::irHasta(int filas_inicio, int columnas_inicio,int filas, int columnas)
 {
-	int dif_filas = filas - fil, // Si es negativo queremos subir 
-		dif_columnas = columnas - col; // Si es negativo a la izq
+	int dif_filas = filas - filas_inicio, // Si es negativo queremos subir 
+		dif_columnas = columnas - columnas_inicio; // Si es negativo a la izq
 
 	int brujula_aux = brujula; // brujula auxiliar para los while
 
@@ -157,7 +157,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 		fil = sensores.posF;
 		col = sensores.posC;
 		bien_situados = true;
-		paredEncontrad = false;
+		//paredEncontrad = false;
 	}
 
 	if(sensores.terreno[0] == 'D' && !zapatillas)
@@ -629,20 +629,20 @@ Action ComportamientoJugador::think(Sensores sensores){
 				if (sensores.terreno[i] == 'G' && !bien_situados && !g_visto)
 				{
 					//cout<<"      .............           "<<i<<" "<<fila_aux<<" "<<columna_aux<<endl;
-					irHasta(fila_aux,columna_aux);
-					//irHasta(fil,col);
+					irHasta(fil,col,fila_aux,columna_aux);
+					irHasta(fila_aux,columna_aux,fil,col);
 					g_visto = true;
 				}
 				else if (sensores.terreno[i] == 'K' && !bikini && !b_visto)
 				{
-					irHasta(fila_aux,columna_aux);
-					//irHasta(fil,col);
+					irHasta(fil,col,fila_aux,columna_aux);
+					irHasta(fila_aux,columna_aux,fil,col);
 					b_visto = true;
 				}
 				if (sensores.terreno[i] == 'D' && !zapatillas && !z_visto)
 				{
-					irHasta(fila_aux,columna_aux);
-					//irHasta(fil,col);
+					irHasta(fil,col,fila_aux,columna_aux);
+					irHasta(fila_aux,columna_aux,fil,col);
 					z_visto = true;
 				}
 			}
@@ -704,7 +704,13 @@ Action ComportamientoJugador::think(Sensores sensores){
 				{
 					if (fil_aux == principio_fil && col_aux == principio_col)
 					{
-						girar_der = true;
+						// Si esta rodeando por dentro (mirar que no gire a la derecha si esta rodeando por fuera)
+						if(ya_visitada)
+							girar_der = true;
+						else
+							girar_izq = true;
+						
+						
 						principio_fil = fil_aux + 1;
 						principio_fil = col_aux - 1;
 						// final_ciclo = true;
@@ -735,6 +741,8 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 					if (!ya_visitada) //|| !final_ciclo)
 						girar_izq = true;
+					//else if (!ya_visitada && //estyo rodeando por fuera)	// intentamos rodear por fuera cuando rodeamos por fuera
+						//girar_der = true; // pfff esto lo quitas luego. NO OLVIDAR!
 				}
 				else // Si no es el caso avanzamos normal
 				{
