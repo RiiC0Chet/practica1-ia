@@ -157,6 +157,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 		fil = sensores.posF;
 		col = sensores.posC;
 		bien_situados = true;
+		paredEncontrad = false;
 	}
 
 	if(sensores.terreno[0] == 'D' && !zapatillas)
@@ -625,21 +626,24 @@ Action ComportamientoJugador::think(Sensores sensores){
 					break;
 				}
 
-				if (sensores.terreno[i] == 'G' && !bien_situados)
+				if (sensores.terreno[i] == 'G' && !bien_situados && !g_visto)
 				{
-					cout<<"      .............           "<<i<<" "<<fila_aux<<" "<<columna_aux<<endl;
+					//cout<<"      .............           "<<i<<" "<<fila_aux<<" "<<columna_aux<<endl;
 					irHasta(fila_aux,columna_aux);
 					//irHasta(fil,col);
+					g_visto = true;
 				}
-				else if (sensores.terreno[i] == 'A' && !bikini)
+				else if (sensores.terreno[i] == 'K' && !bikini && !b_visto)
 				{
 					irHasta(fila_aux,columna_aux);
 					//irHasta(fil,col);
+					b_visto = true;
 				}
-				if (sensores.terreno[i] == 'B' && !zapatillas)
+				if (sensores.terreno[i] == 'D' && !zapatillas && !z_visto)
 				{
 					irHasta(fila_aux,columna_aux);
 					//irHasta(fil,col);
+					z_visto = true;
 				}
 			}
 		}
@@ -760,6 +764,15 @@ Action ComportamientoJugador::think(Sensores sensores){
 		// Vamos accediendo en orden a las acciones pendientes y vamos eliminandolas;
 		accion = cadenaAcciones[0];
 		cadenaAcciones.erase(cadenaAcciones.begin());
+
+		cout<<"La proxima accion del vector es: "<<accion<<endl;
+
+		if(accion == actFORWARD && !puedoPisar(2,sensores))
+		{
+			accion = actIDLE;
+			cadenaAcciones.clear();
+		}
+		
 	}
 
 	ultimaAccion = accion;

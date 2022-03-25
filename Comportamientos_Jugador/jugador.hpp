@@ -24,7 +24,10 @@ class ComportamientoJugador : public Comportamiento{
       ya_visitada_enfrente = false;
       bikini = false;
       zapatillas = false;
-
+      g_visto = false;
+      b_visto = false;
+      z_visto = false;
+      
       for(int i=0;i<MAX_FILAS;i++)
       {
         for(int j=0;j<MAX_COLUMNAS;j++)
@@ -77,7 +80,10 @@ class ComportamientoJugador : public Comportamiento{
 
   bool paredEncontrad, // Comporbamos si hemos encontrado pared y estamos pegados para ir mirando si esta se acaba
        bikini,
-       zapatillas;
+       zapatillas,
+       g_visto, // Almacenamos si ya hemos visto una casilla para no volver hacia ella
+       b_visto,
+       z_visto;
   // Creamos un vector con las siguientes acciones a realizar por el personaje
   vector <Action> cadenaAcciones;
 };
