@@ -27,6 +27,7 @@ class ComportamientoJugador : public Comportamiento{
       g_visto = false;
       b_visto = false;
       z_visto = false;
+      ha_chocado = false;
       
       for(int i=0;i<MAX_FILAS;i++)
       {
@@ -76,7 +77,8 @@ class ComportamientoJugador : public Comportamiento{
         girar_der, // Forzamos el giro a la derecha
         ya_visitada, // comprobamos si esa casilla ya ha sido visitada antes de girar a la izquierda
         final_ciclo, // Comprobamos si hemos llegado al final de un ciclo
-        ya_visitada_enfrente; // comprobamos que en frente no hayamos estado
+        ya_visitada_enfrente, // comprobamos que en frente no hayamos estado
+        ha_chocado; // comprobamos si se ha llegado a chocar o no
 
   bool paredEncontrad, // Comporbamos si hemos encontrado pared y estamos pegados para ir mirando si esta se acaba
        bikini,

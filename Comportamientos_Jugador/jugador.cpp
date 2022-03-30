@@ -86,7 +86,10 @@ bool ComportamientoJugador::puedoPisar(int pos , Sensores sensores)
 
 	// Cuando nos chocamos con algo reseteamos el ciclo
 	if(sensores.superficie[pos] != '_')
+	{
 		paredEncontrad = false;
+		ha_chocado = true;
+	}
 
 	return false;
 }
@@ -771,6 +774,14 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 			accion = actTURN_R;
 			cout << "Giro a la der" << endl;
+
+			// si ha chocado y esta dando vueltas por una pared o algo que gire izq en vez de der
+			if(ha_chocado && !puedoPisar(2,sensores))
+			{
+				accion = actTURN_L;
+				ha_chocado = false;
+			}
+				
 		}
 	}
 	else
