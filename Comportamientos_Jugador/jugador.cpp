@@ -84,6 +84,10 @@ bool ComportamientoJugador::puedoPisar(int pos , Sensores sensores)
 			return true;
 	}
 
+	// Cuando nos chocamos con algo reseteamos el ciclo
+	if(sensores.superficie[pos] != '_')
+		paredEncontrad = false;
+
 	return false;
 }
 
@@ -282,6 +286,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 	}
 
 
+	//cout<<"Hay zapatillas? "<<zapatillas<<z_visto<<endl;
 	
 // Comprobammos con los sensores si estamos viendo alguna de estas casillas
 		if (!bikini || !zapatillas || !bien_situados)
@@ -639,8 +644,9 @@ Action ComportamientoJugador::think(Sensores sensores){
 					irHasta(fila_aux,columna_aux,fil,col);
 					b_visto = true;
 				}
-				if (sensores.terreno[i] == 'D' && !zapatillas && !z_visto)
+				else if (sensores.terreno[i] == 'D' && !zapatillas && !z_visto)
 				{
+					//cout<<"EOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"<<endl;
 					irHasta(fil,col,fila_aux,columna_aux);
 					irHasta(fila_aux,columna_aux,fil,col);
 					z_visto = true;
@@ -780,6 +786,16 @@ Action ComportamientoJugador::think(Sensores sensores){
 			accion = actIDLE;
 			cadenaAcciones.clear();
 		}
+
+		// Si hemos vuelto a donde estamos buscamos una pared y volvemos a poder ir a or u bikini o zapatillas o lo que sea si no hemos pasado
+		if(cadenaAcciones.empty())
+		{
+			paredEncontrad = false;
+			g_visto = false;
+			z_visto = false;
+			b_visto = false;
+		}
+			
 		
 	}
 
