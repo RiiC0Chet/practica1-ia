@@ -11,7 +11,7 @@ class ComportamientoJugador : public Comportamiento{
       // Constructor de la clase
       // Dar el valor inicial a las variables de estado
       fil = col = fil_aux = col_aux = 99;
-      brujula = max_giros =0; // max_giros contabiliza el numero de veces que gira sobre si mismo antes de tener que volver sobre sus propios pasos
+      brujula = max_giros = posicion_vector = 0; // max_giros contabiliza el numero de veces que gira sobre si mismo antes de tener que volver sobre sus propios pasos
       origen = (brujula+2)%4; // origen tiene que apuntar al lugar contrario a donde nos dirigimos
       ultimaAccion = actIDLE;
       girar_izq = false;
@@ -54,6 +54,10 @@ class ComportamientoJugador : public Comportamiento{
     */
     bool puedoPisar(int pos, Sensores sensores);
 
+    /*
+      Comprobamos si ha entrado en bucle
+    */
+    bool estaEnBucle();
 
     Action think(Sensores sensores);
     int interact(Action accion, int valor);
@@ -67,7 +71,9 @@ class ComportamientoJugador : public Comportamiento{
 
   int fil, col, brujula, origen, max_giros,
       principio_fil, principio_col, //Almacenamos las coordenadas de donde emppiez a recorer la pared
-      fil_aux,col_aux; // fila y columna auxiliar
+      fil_aux,col_aux, // fila y columna auxiliar
+      posicion_vector; // Para acceder al vector de ultimas 4
+
   Action ultimaAccion;
   bool girar_izq, // Con girar_izq comprobamos si hay que girar a la izquierda para no salirse de la pared
         bien_situados, 
@@ -86,8 +92,13 @@ class ComportamientoJugador : public Comportamiento{
        g_visto, // Almacenamos si ya hemos visto una casilla para no volver hacia ella
        b_visto,
        z_visto;
+  
   // Creamos un vector con las siguientes acciones a realizar por el personaje
   vector <Action> cadenaAcciones;
+
+  // Creamos un vector de pares donde almacenamos las ultimas 4 posiciones donde ha estado el personaje
+  vector <pair<int,int>> ultimasCuatro;
+
 };
 
 #endif

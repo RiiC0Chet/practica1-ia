@@ -94,6 +94,21 @@ bool ComportamientoJugador::puedoPisar(int pos , Sensores sensores)
 	return false;
 }
 
+bool ComportamientoJugador::estaEnBucle()
+{
+	int filas_coincidentes = 0,
+		columnas_coincidentes = 0;
+	
+	for(int i=0;i<ultimasCuatro.size();++i)
+	{
+		for(int j=0;j<ultimasCuatro.size();++j)
+		{
+			if(ultimasCuatro[i].first == )
+		}
+	}
+
+}
+
 Action ComportamientoJugador::think(Sensores sensores){
 
 	Action accion = actIDLE;
@@ -130,6 +145,10 @@ Action ComportamientoJugador::think(Sensores sensores){
 				case 2 : fil++; fil_aux++;break;
 				case 3 : col--; col_aux--;break;
 			}
+
+			// avanzamos modulo 4 en el vectoir de las ultimas 4
+			posicion_vector = (posicion_vector+1)%4;
+
 		break;
 
 		case actTURN_R: // giramos a la derecha
