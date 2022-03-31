@@ -85,11 +85,11 @@ bool ComportamientoJugador::puedoPisar(int pos , Sensores sensores)
 	}
 
 	// Cuando nos chocamos con algo reseteamos el ciclo
-	if(sensores.superficie[pos] != '_')
-	{
-		paredEncontrad = false;
-		ha_chocado = true;
-	}
+	//if(sensores.superficie[pos] != '_')
+	//{
+	//	paredEncontrad = false;
+	//	ha_chocado = true;
+	//}
 
 	return false;
 }
@@ -805,11 +805,11 @@ Action ComportamientoJugador::think(Sensores sensores){
 			cout << "Giro a la der" << endl;
 
 			// si ha chocado y esta dando vueltas por una pared o algo que gire izq en vez de der
-			if(ha_chocado && !puedoPisar(2,sensores))
-			{
-				accion = actTURN_L;
-				ha_chocado = false;
-			}
+			//if(ha_chocado && !puedoPisar(2,sensores))
+			//{
+			//	accion = actTURN_L;
+			//	ha_chocado = false;
+			//}
 				
 		}
 	}
@@ -844,6 +844,8 @@ Action ComportamientoJugador::think(Sensores sensores){
 	{
 		ultimasCuatro[posicion_vector].first = fil_aux;
 		ultimasCuatro[posicion_vector].second = col_aux;
+
+		cout<<"Las posiciones almacenadas en el vec pos "<<posicion_vector<<" son : "<<fil_aux<<" "<<col_aux<<endl;
 	}
 	
 
