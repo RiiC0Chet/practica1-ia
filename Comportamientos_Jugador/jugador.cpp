@@ -103,9 +103,18 @@ bool ComportamientoJugador::estaEnBucle()
 	{
 		for(int j=0;j<ultimasCuatro.size();++j)
 		{
-			if(ultimasCuatro[i].first == )
+			if(ultimasCuatro[i].first == ultimasCuatro[j].first)
+				filas_coincidentes++;
+			if(ultimasCuatro[i].second == ultimasCuatro[j].second)
+				columnas_coincidentes++;
 		}
 	}
+
+	// tienen que coincidir cada uno 8 veces para qued este en bucle
+	if( filas_coincidentes == 8 && columnas_coincidentes == 8)
+		return true;
+	else
+		return false;
 
 }
 
@@ -682,8 +691,9 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 
 
-
-
+	// si esta en bucle y no esta en frente de una pared que avance para salir del bucle
+	if(estaEnBucle() && puedoPisar(2,sensores))
+		paredEncontrad = false;
 
 
 	// Comprobamos antes de nada si tenemos acciones pendietes en el vector
@@ -828,6 +838,15 @@ Action ComportamientoJugador::think(Sensores sensores){
 			
 		
 	}
+
+	// si la ultima accion es avanzar almacenamos la posicion desde donde nos movemos en el vectopr de ultimasCuatro posiciones
+	if(ultimaAccion == actFORWARD)
+	{
+		ultimasCuatro[posicion_vector].first = fil_aux;
+		ultimasCuatro[posicion_vector].second = col_aux;
+	}
+	
+
 
 	ultimaAccion = accion;
 

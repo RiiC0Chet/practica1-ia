@@ -29,6 +29,9 @@ class ComportamientoJugador : public Comportamiento{
       z_visto = false;
       ha_chocado = false;
       
+      for(int i=0;i<4;i++)
+        ultimasCuatro.push_back(std::make_pair(i*2,i*2));
+
       for(int i=0;i<MAX_FILAS;i++)
       {
         for(int j=0;j<MAX_COLUMNAS;j++)
