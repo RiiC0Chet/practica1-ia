@@ -99,16 +99,26 @@ bool ComportamientoJugador::estaEnBucle()
 	int filas_coincidentes = 0,
 		columnas_coincidentes = 0;
 	
-	for(int i=0;i<ultimasCuatro.size();++i)
+	for(int i=0;i<ultimasCuatro.size();i++)
 	{
-		for(int j=0;j<ultimasCuatro.size();++j)
+		for(int j=0;j<ultimasCuatro.size();j++)
 		{
 			if(ultimasCuatro[i].first == ultimasCuatro[j].first)
+			{
 				filas_coincidentes++;
+				cout<<"La fila actual es: "<<ultimasCuatro[i].first<<" comparada con : "<<ultimasCuatro[j].first<<endl;
+			}
+				
 			if(ultimasCuatro[i].second == ultimasCuatro[j].second)
+			{
 				columnas_coincidentes++;
+				cout<<"La col actual es: "<<ultimasCuatro[i].second<<" comparada con : "<<ultimasCuatro[j].second<<endl;
+			}
+				
 		}
 	}
+
+	cout<<"kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk "<<filas_coincidentes<<" "<<columnas_coincidentes<<endl;
 
 	// tienen que coincidir cada uno 8 veces para qued este en bucle
 	if( filas_coincidentes == 8 && columnas_coincidentes == 8)
