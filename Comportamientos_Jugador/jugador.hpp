@@ -11,7 +11,7 @@ class ComportamientoJugador : public Comportamiento{
       // Constructor de la clase
       // Dar el valor inicial a las variables de estado
       fil = col = fil_aux = col_aux = 99;
-      brujula = max_giros = posicion_vector = 0; // max_giros contabiliza el numero de veces que gira sobre si mismo antes de tener que volver sobre sus propios pasos
+      brujula = max_giros = posicion_vector = esta_en_bucle = has_esperado = num_giros = 0; // max_giros contabiliza el numero de veces que gira sobre si mismo antes de tener que volver sobre sus propios pasos
       origen = (brujula+2)%4; // origen tiene que apuntar al lugar contrario a donde nos dirigimos
       ultimaAccion = actIDLE;
       girar_izq = false;
@@ -62,6 +62,11 @@ class ComportamientoJugador : public Comportamiento{
     */
     bool estaEnBucle();
 
+    /*
+      Comprobamos si ha explotado y empezamos de 0
+    */
+    bool restart();
+
     Action think(Sensores sensores);
     int interact(Action accion, int valor);
 
@@ -75,7 +80,10 @@ class ComportamientoJugador : public Comportamiento{
   int fil, col, brujula, origen, max_giros,
       principio_fil, principio_col, //Almacenamos las coordenadas de donde emppiez a recorer la pared
       fil_aux,col_aux, // fila y columna auxiliar
-      posicion_vector; // Para acceder al vector de ultimas 4
+      posicion_vector, // Para acceder al vector de ultimas 4
+      esta_en_bucle, // contamos que este en bucle por mas de 2 ciclos
+      has_esperado, // esperamos unos movimientos para que no se quede ciclando en la misma posicion por una casilla a la que no puede acceder
+      num_giros; // numero de veces que gira para ver si estamos girando sobre nosotros mismos
 
   Action ultimaAccion;
   bool girar_izq, // Con girar_izq comprobamos si hay que girar a la izquierda para no salirse de la pared
@@ -88,6 +96,7 @@ class ComportamientoJugador : public Comportamiento{
         final_ciclo, // Comprobamos si hemos llegado al final de un ciclo
         ya_visitada_enfrente, // comprobamos que en frente no hayamos estado
         ha_chocado; // comprobamos si se ha llegado a chocar o no
+        
 
   bool paredEncontrad, // Comporbamos si hemos encontrado pared y estamos pegados para ir mirando si esta se acaba
        bikini,

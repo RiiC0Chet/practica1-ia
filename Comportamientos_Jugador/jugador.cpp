@@ -114,11 +114,61 @@ bool ComportamientoJugador::estaEnBucle()
 	if( filas_coincidentes == 8 && columnas_coincidentes == 8)
 		return true;
 	else
-		return false;
+	{
+		if(num_giros > 7)
+			return true;
+		else
+			return false;
+	}
+		
 
 }
 
+bool ComportamientoJugador::restart()
+{
+	// Reiniciamos todo con el constructor 
+	// Dar el valor inicial a las variables de estado
+      fil = col = fil_aux = col_aux = 99;
+      brujula = max_giros = posicion_vector = esta_en_bucle = 0; // max_giros contabiliza el numero de veces que gira sobre si mismo antes de tener que volver sobre sus propios pasos
+      origen = (brujula+2)%4; // origen tiene que apuntar al lugar contrario a donde nos dirigimos
+      ultimaAccion = actIDLE;
+      girar_izq = false;
+      bien_situados = false;
+      primeraPared = true;
+      paredEncontrad = false;
+      girar_der = false;
+      ya_visitada = false;
+      final_ciclo = false;
+      ya_visitada_enfrente = false;
+      bikini = false;
+      zapatillas = false;
+      g_visto = false;
+      b_visto = false;
+      z_visto = false;
+      ha_chocado = false;
+      
+      for(int i=0;i<4;i++)
+        ultimasCuatro.push_back(std::make_pair(i*2,i*2));
+
+      for(int i=0;i<MAX_FILAS;i++)
+      {
+        for(int j=0;j<MAX_COLUMNAS;j++)
+        {
+          esta_pintada[i][j] = false;
+          ciclo_anterior[i][j] = false;
+        }
+      }
+}
+
 Action ComportamientoJugador::think(Sensores sensores){
+	
+	// si te ha comido un lobo resetea todas las variables de estado
+	if(sensores.reset)
+	{
+		//scout<<"Tan comiooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo."<<endl;
+		restart();
+	}
+		
 
 	Action accion = actIDLE;
 
@@ -674,6 +724,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 					irHasta(fil,col,fila_aux,columna_aux);
 					irHasta(fila_aux,columna_aux,fil,col);
 					b_visto = true;
+					//cout<<"ya no vuelves a entrar aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"<<endl;
 				}
 				else if (sensores.terreno[i] == 'D' && !zapatillas && !z_visto)
 				{
@@ -693,7 +744,18 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 	// si esta en bucle y no esta en frente de una pared que avance para salir del bucle
 	if(estaEnBucle() && puedoPisar(2,sensores))
-		paredEncontrad = false;
+	{
+		esta_en_bucle++;
+		cout<<"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"<<endl;
+		if(esta_en_bucle > 4 && puedoPisar(2,sensores))
+		{
+			cout<<"ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"<<endl;
+			paredEncontrad = false;
+			esta_en_bucle = 0;
+		}
+			
+	}
+		
 
 
 	// Comprobamos antes de nada si tenemos acciones pendietes en el vector
@@ -828,12 +890,14 @@ Action ComportamientoJugador::think(Sensores sensores){
 		}
 
 		// Si hemos vuelto a donde estamos buscamos una pared y volvemos a poder ir a or u bikini o zapatillas o lo que sea si no hemos pasado
-		if(cadenaAcciones.empty())
+		if(cadenaAcciones.empty() && has_esperado > 5)
 		{
 			paredEncontrad = false;
 			g_visto = false;
 			z_visto = false;
 			b_visto = false;
+
+			has_esperado = 0;
 		}
 			
 		
@@ -848,8 +912,13 @@ Action ComportamientoJugador::think(Sensores sensores){
 		cout<<"Las posiciones almacenadas en el vec pos "<<posicion_vector<<" son : "<<fil_aux<<" "<<col_aux<<endl;
 	}
 	
+	// si no estas avanzando o estas modo IDLE estas girando
+	if(ultimaAccion != actFORWARD && ultimaAccion != actIDLE)
+		num_giros++;
+	else
+		num_giros = 0;
 
-
+	has_esperado ++;
 	ultimaAccion = accion;
 
 	// Determinar el efecto de la ultima accion enviada
