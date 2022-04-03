@@ -106,13 +106,13 @@ bool ComportamientoJugador::estaEnBucle()
 			if(ultimasCuatro[i].first == ultimasCuatro[j].first)
 			{
 				filas_coincidentes++;
-				cout<<"La fila actual es: "<<ultimasCuatro[i].first<<" comparada con : "<<ultimasCuatro[j].first<<endl;
+				//cout<<"La fila actual es: "<<ultimasCuatro[i].first<<" comparada con : "<<ultimasCuatro[j].first<<endl;
 			}
 				
 			if(ultimasCuatro[i].second == ultimasCuatro[j].second)
 			{
 				columnas_coincidentes++;
-				cout<<"La col actual es: "<<ultimasCuatro[i].second<<" comparada con : "<<ultimasCuatro[j].second<<endl;
+				//cout<<"La col actual es: "<<ultimasCuatro[i].second<<" comparada con : "<<ultimasCuatro[j].second<<endl;
 			}
 				
 		}
@@ -120,8 +120,8 @@ bool ComportamientoJugador::estaEnBucle()
 
 	cout<<"kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk "<<filas_coincidentes<<" "<<columnas_coincidentes<<endl;
 
-	// tienen que coincidir cada uno 8 veces para qued este en bucle
-	if( filas_coincidentes == 8 && columnas_coincidentes == 8)
+	// tienen que coincidir cada uno 8 veces para qued este en bucle o 12
+	if( (filas_coincidentes == 8 && columnas_coincidentes == 8) || (filas_coincidentes == 12 && columnas_coincidentes == 12) )
 		return true;
 	else
 	{
@@ -756,10 +756,10 @@ Action ComportamientoJugador::think(Sensores sensores){
 	if(estaEnBucle() && puedoPisar(2,sensores))
 	{
 		esta_en_bucle++;
-		cout<<"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"<<endl;
+		//cout<<"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"<<endl;
 		if(esta_en_bucle > 4 && puedoPisar(2,sensores))
 		{
-			cout<<"ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"<<endl;
+		//	cout<<"ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"<<endl;
 			paredEncontrad = false;
 			esta_en_bucle = 0;
 		}
@@ -788,19 +788,20 @@ Action ComportamientoJugador::think(Sensores sensores){
 			// Ponemos el girar_izq a false otra vez
 			girar_der = false;
 		}
-		else if (puedoPisar(2,sensores) && !ya_visitada_enfrente) // Comprobamos si podriamos avanzar hacia delante
+		else if(!paredEncontrad && puedoPisar(2,sensores)) // Comprobamos si estamos pegados a una pared o no para fijarnos como continua esta
 		{
-			// Comprobamos si estamos pegados a una pared o no para fijarnos como continua esta
-			if (!paredEncontrad)
-			{
-				accion = actFORWARD;
+			accion = actFORWARD;
 				cout << "Avanzo" << endl;
 
 				// Almacenamos la posicion
 				esta_pintada[fil_aux][col_aux] = true;
-			}
-			else // En caso de que estemos en pared antes de avanzar nos fijamos en comon continua esta
-			{
+		}
+		else if (puedoPisar(2,sensores) && !ya_visitada_enfrente) // Comprobamos si podriamos avanzar hacia delante
+		{
+			
+
+			// En caso de que estemos en pared antes de avanzar nos fijamos en comon continua esta
+			
 
 
 				// Si es la primera vez que chocamso con una pared almacenamos la posicion para saber cuando hemos dado una vuelta
@@ -862,7 +863,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 					// Almacenamos la posicion
 					esta_pintada[fil_aux][col_aux] = true;
 				}
-			}
+			
 		}
 		else // En caso de no poder avanzar nos habriamos chocado con un borde y habria que empezar a rodearlo
 		{
