@@ -28,7 +28,9 @@ class ComportamientoJugador : public Comportamiento{
       b_visto = false;
       z_visto = false;
       ha_chocado = false;
-      
+      buen_spawn = false;
+      cadena_acciones_finalizada = true;
+
       for(int i=0;i<4;i++)
         ultimasCuatro.push_back(std::make_pair(i*2,i*2));
 
@@ -67,6 +69,11 @@ class ComportamientoJugador : public Comportamiento{
     */
     bool restart();
 
+    /*
+      Buscamos una posicion, devolviendo un bool y reyenando el par con las posiciones si lo ha encontrado
+    */
+    bool busca(const char casilla,pair<int,int> & par, Sensores sensores);
+
     Action think(Sensores sensores);
     int interact(Action accion, int valor);
 
@@ -95,7 +102,9 @@ class ComportamientoJugador : public Comportamiento{
         ya_visitada, // comprobamos si esa casilla ya ha sido visitada antes de girar a la izquierda
         final_ciclo, // Comprobamos si hemos llegado al final de un ciclo
         ya_visitada_enfrente, // comprobamos que en frente no hayamos estado
-        ha_chocado; // comprobamos si se ha llegado a chocar o no
+        ha_chocado, // comprobamos si se ha llegado a chocar o no
+        buen_spawn, // Comprobamos si hemos encontrado un camino viable hasta tierra en caso de haber spawneado en bosque o agua
+        cadena_acciones_finalizada; // comprobamos que las cadenas de acciones totalmente necesarias del vector no se cortan
         
 
   bool paredEncontrad, // Comporbamos si hemos encontrado pared y estamos pegados para ir mirando si esta se acaba
@@ -110,6 +119,9 @@ class ComportamientoJugador : public Comportamiento{
 
   // Creamos un vector de pares donde almacenamos las ultimas 4 posiciones donde ha estado el personaje
   vector <pair<int,int>> ultimasCuatro;
+
+  // par auxiliar que iremos utilizando para almacenar coordenadas
+  std::pair<int,int> posiciones;
 
 };
 
