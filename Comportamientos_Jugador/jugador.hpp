@@ -11,7 +11,7 @@ class ComportamientoJugador : public Comportamiento{
       // Constructor de la clase
       // Dar el valor inicial a las variables de estado
       fil = col = fil_aux = col_aux = 99;
-      brujula = max_giros = posicion_vector = esta_en_bucle = has_esperado = num_giros = 0; // max_giros contabiliza el numero de veces que gira sobre si mismo antes de tener que volver sobre sus propios pasos
+      brujula = max_giros = posicion_vector = esta_en_bucle = has_esperado = num_giros = num_ciclo_sin_descubrir = 0; // max_giros contabiliza el numero de veces que gira sobre si mismo antes de tener que volver sobre sus propios pasos
       origen = (brujula+2)%4; // origen tiene que apuntar al lugar contrario a donde nos dirigimos
       ultimaAccion = actIDLE;
       girar_izq = false;
@@ -30,6 +30,7 @@ class ComportamientoJugador : public Comportamiento{
       ha_chocado = false;
       buen_spawn = false;
       cadena_acciones_finalizada = true;
+      has_repostado = false;
 
       for(int i=0;i<4;i++)
         ultimasCuatro.push_back(std::make_pair(i*2,i*2));
@@ -90,7 +91,8 @@ class ComportamientoJugador : public Comportamiento{
       posicion_vector, // Para acceder al vector de ultimas 4
       esta_en_bucle, // contamos que este en bucle por mas de 2 ciclos
       has_esperado, // esperamos unos movimientos para que no se quede ciclando en la misma posicion por una casilla a la que no puede acceder
-      num_giros; // numero de veces que gira para ver si estamos girando sobre nosotros mismos
+      num_giros, // numero de veces que gira para ver si estamos girando sobre nosotros mismos
+      num_ciclo_sin_descubrir; // numero de ciclos que pasamos sin avanzar
 
   Action ultimaAccion;
   bool girar_izq, // Con girar_izq comprobamos si hay que girar a la izquierda para no salirse de la pared
@@ -104,8 +106,8 @@ class ComportamientoJugador : public Comportamiento{
         ya_visitada_enfrente, // comprobamos que en frente no hayamos estado
         ha_chocado, // comprobamos si se ha llegado a chocar o no
         buen_spawn, // Comprobamos si hemos encontrado un camino viable hasta tierra en caso de haber spawneado en bosque o agua
-        cadena_acciones_finalizada; // comprobamos que las cadenas de acciones totalmente necesarias del vector no se cortan
-        
+        cadena_acciones_finalizada, // comprobamos que las cadenas de acciones totalmente necesarias del vector no se cortan
+        has_repostado;  // comprobamos que hayamos estado repostando bateria ya alguna vez en una casilla 'X'
 
   bool paredEncontrad, // Comporbamos si hemos encontrado pared y estamos pegados para ir mirando si esta se acaba
        bikini,
@@ -120,8 +122,10 @@ class ComportamientoJugador : public Comportamiento{
   // Creamos un vector de pares donde almacenamos las ultimas 4 posiciones donde ha estado el personaje
   vector <pair<int,int>> ultimasCuatro;
 
-  // par auxiliar que iremos utilizando para almacenar coordenadas
-  std::pair<int,int> posiciones;
+  
+  std::pair<int,int> posiciones,  // par auxiliar que iremos utilizando para almacenar coordenadas
+                     puerta;     // almacenamos la posicion de alguna puerta para volver cuando estemos un rato sin avanzar
+
 
 };
 

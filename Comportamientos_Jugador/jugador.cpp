@@ -28,7 +28,8 @@ void ComportamientoJugador::irHasta(int filas_inicio, int columnas_inicio,int fi
 		}
 			
 	}
-		
+	
+	//cout<<"dif filas: "<<dif_filas<<endl;
 	for(int i = 0;i < dif_filas;i++)
 		cadenaAcciones.push_back(actFORWARD);
 
@@ -54,7 +55,7 @@ void ComportamientoJugador::irHasta(int filas_inicio, int columnas_inicio,int fi
 			
 	}
 
-
+	//cout<<"dif columnas: "<<dif_columnas<<endl;
 	for(int i = 0; i < dif_columnas ;i++)
 		cadenaAcciones.push_back(actFORWARD);
 }
@@ -137,7 +138,7 @@ bool ComportamientoJugador::restart()
 	// Reiniciamos todo con el constructor 
 	// Dar el valor inicial a las variables de estado
       fil = col = fil_aux = col_aux = 99;
-      brujula = max_giros = posicion_vector = esta_en_bucle = 0; // max_giros contabiliza el numero de veces que gira sobre si mismo antes de tener que volver sobre sus propios pasos
+      brujula = max_giros = posicion_vector = esta_en_bucle = has_esperado = num_giros = num_ciclo_sin_descubrir = 0; // max_giros contabiliza el numero de veces que gira sobre si mismo antes de tener que volver sobre sus propios pasos
       origen = (brujula+2)%4; // origen tiene que apuntar al lugar contrario a donde nos dirigimos
       ultimaAccion = actIDLE;
       girar_izq = false;
@@ -156,7 +157,8 @@ bool ComportamientoJugador::restart()
       ha_chocado = false;
       buen_spawn = false;
 	  cadena_acciones_finalizada = true;
-      
+      has_repostado = false;
+
 	  for(int i=0;i<4;i++)
         ultimasCuatro.push_back(std::make_pair(i*2,i*2));
 
@@ -736,34 +738,43 @@ Action ComportamientoJugador::think(Sensores sensores){
 	//cout<<"Hay zapatillas? "<<zapatillas<<z_visto<<endl;
 	
 // Comprobammos con los sensores si estamos viendo alguna de estas casillas
-		if (!bikini || !zapatillas || !bien_situados)
-		{
-			// Definimos las dos variables locales que nos serviran para representar las posiciones del cada casilla del sensor en el mapa
-			//int fila_aux,columna_aux;
 
-				if (busca('G',posiciones, sensores)  && !bien_situados && !g_visto)
-				{
-					//cout<<" ............................................ ............................................"<<posiciones.first<<" "<<posiciones.second<<endl;
-					irHasta(fil,col,posiciones.first,posiciones.second);
-					irHasta(posiciones.first,posiciones.second,fil,col);
-					g_visto = true;
-				}
-				else if (busca('K',posiciones, sensores) && !bikini && !b_visto)
-				{
-					irHasta(fil,col,posiciones.first,posiciones.second);
-					irHasta(posiciones.first,posiciones.second,fil,col);
-					b_visto = true;
-					//cout<<"ya no vuelves a entrar aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"<<endl;
-				}
-				else if (busca('D',posiciones, sensores) && !zapatillas && !z_visto)
-				{
-					//cout<<"EOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"<<endl;
-					irHasta(fil,col,posiciones.first,posiciones.second);
-					irHasta(posiciones.first,posiciones.second,fil,col);
-					z_visto = true;
-				}
-			
+	// Definimos las dos variables locales que nos serviran para representar las posiciones del cada casilla del sensor en el mapa
+	//int fila_aux,columna_aux;
+		if (busca('G',posiciones, sensores)  && !bien_situados && !g_visto)
+		{
+			//cout<<" ............................................ ............................................"<<posiciones.first<<" "<<posiciones.second<<endl;
+			irHasta(fil,col,posiciones.first,posiciones.second);
+			//irHasta(posiciones.first,posiciones.second,fil,col);
+			g_visto = true;
 		}
+		else if (busca('K',posiciones, sensores) && !bikini && !b_visto)
+		{
+			irHasta(fil,col,posiciones.first,posiciones.second);
+			//irHasta(posiciones.first,posiciones.second,fil,col);
+			b_visto = true;
+			cout<<"ya no vuelves a entrar aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"<<endl;
+		}
+		else if (busca('D',posiciones, sensores) && !zapatillas && !z_visto)
+		{
+			
+			irHasta(fil,col,posiciones.first,posiciones.second);
+			//irHasta(posiciones.first,posiciones.second,fil,col);
+			z_visto = true;
+		}
+		else if (busca('X',posiciones, sensores) && !has_repostado)
+		{
+			//cout<<"EOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"<<endl;
+			irHasta(fil,col,posiciones.first,posiciones.second);
+
+			// si encontramos una estacion de carga nos quedamos en actIDLE hasta que la carguemos al maximo
+			for(int i = 0; i < (3000 - sensores.bateria) ;i = i + 10)
+				cadenaAcciones.push_back(actIDLE);
+			
+			has_repostado = true;
+		}
+
+
 
 
 
@@ -785,7 +796,9 @@ Action ComportamientoJugador::think(Sensores sensores){
 			
 	}
 		
-
+	
+		
+		
 
 	// Comprobamos antes de nada si tenemos acciones pendietes en el vector
 	if (cadenaAcciones.empty())
@@ -801,6 +814,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 					buen_spawn = true;
 					busca(sensores.terreno[i],posiciones, sensores);
 					irHasta(fil,col,posiciones.first,posiciones.second);
+					break;
 				}
 			}
 			
