@@ -2,93 +2,92 @@
 #include <iostream>
 using namespace std;
 
-void ComportamientoJugador::irHasta(int filas_inicio, int columnas_inicio,int filas, int columnas)
+void ComportamientoJugador::irHasta(int filas_inicio, int columnas_inicio, int filas, int columnas)
 {
-	int dif_filas = filas - filas_inicio, // Si es negativo queremos subir 
+	int dif_filas = filas - filas_inicio,		   // Si es negativo queremos subir
 		dif_columnas = columnas - columnas_inicio; // Si es negativo a la izq
 
 	int brujula_aux = brujula; // brujula auxiliar para los while
 
-	//Si es negativo giramos hasta estas ubicados al norte
-	if(dif_filas < 0)
+	// Si es negativo giramos hasta estas ubicados al norte
+	if (dif_filas < 0)
 	{
-		while(brujula_aux != 0) 
+		while (brujula_aux != 0)
 		{
 			cadenaAcciones.push_back(actTURN_R);
-			brujula_aux = (brujula_aux+1)%4;
+			brujula_aux = (brujula_aux + 1) % 4;
 		}
 		dif_filas = dif_filas * (-1);
 	}
-	else //Si es positivo giramos hasta estas ubicados al sur
+	else // Si es positivo giramos hasta estas ubicados al sur
 	{
-		while(brujula_aux != 2)
+		while (brujula_aux != 2)
 		{
 			cadenaAcciones.push_back(actTURN_R);
-			brujula_aux = (brujula_aux+1)%4;
+			brujula_aux = (brujula_aux + 1) % 4;
 		}
-			
 	}
-	
-	//cout<<"dif filas: "<<dif_filas<<endl;
-	for(int i = 0;i < dif_filas;i++)
+
+	// cout<<"dif filas: "<<dif_filas<<endl;
+	for (int i = 0; i < dif_filas; i++)
 		cadenaAcciones.push_back(actFORWARD);
 
-	//Si es negativo giramos hasta estas ubicados al oeste
-	if(dif_columnas < 0)
+	// Si es negativo giramos hasta estas ubicados al oeste
+	if (dif_columnas < 0)
 	{
-		while(brujula_aux != 3)
+		while (brujula_aux != 3)
 		{
 			cadenaAcciones.push_back(actTURN_R);
-			brujula_aux = (brujula_aux+1)%4;
+			brujula_aux = (brujula_aux + 1) % 4;
 		}
-			
 
 		dif_columnas = dif_columnas * (-1);
 	}
-	else //Si es positivo giramos hasta estas ubicados al este
+	else // Si es positivo giramos hasta estas ubicados al este
 	{
-		while(brujula_aux != 1)
+		while (brujula_aux != 1)
 		{
 			cadenaAcciones.push_back(actTURN_R);
-			brujula_aux = (brujula_aux+1)%4;
+			brujula_aux = (brujula_aux + 1) % 4;
 		}
-			
 	}
 
-	//cout<<"dif columnas: "<<dif_columnas<<endl;
-	for(int i = 0; i < dif_columnas ;i++)
+	// cout<<"dif columnas: "<<dif_columnas<<endl;
+	for (int i = 0; i < dif_columnas; i++)
 		cadenaAcciones.push_back(actFORWARD);
 }
 
-bool ComportamientoJugador::puedoPisar(int pos , Sensores sensores)
+bool ComportamientoJugador::puedoPisar(int pos, Sensores sensores)
 {
-	if(bikini && zapatillas)
+	if (bikini && zapatillas)
 	{
-		if((sensores.terreno[pos] == 'T' || sensores.terreno[pos] == 'S' || sensores.terreno[pos] == 'G' || sensores.terreno[pos] == 'D' || sensores.terreno[pos] == 'K' || sensores.terreno[pos] == 'X' || sensores.terreno[pos] == 'A' || sensores.terreno[pos] == 'B' ) && sensores.superficie[pos] == '_')
+		if ((sensores.terreno[pos] == 'T' || sensores.terreno[pos] == 'S' || sensores.terreno[pos] == 'G' || sensores.terreno[pos] == 'D' || sensores.terreno[pos] == 'K' || sensores.terreno[pos] == 'X' || sensores.terreno[pos] == 'A' || sensores.terreno[pos] == 'B') && (sensores.superficie[pos] == '_' || sensores.superficie[pos] == 'j'))
 			return true;
 	}
-	else if(bikini)
+	else if (bikini)
 	{
-		if((sensores.terreno[pos] == 'T' || sensores.terreno[pos] == 'S' || sensores.terreno[pos] == 'G' || sensores.terreno[pos] == 'D' || sensores.terreno[pos] == 'K' || sensores.terreno[pos] == 'X' || sensores.terreno[pos] == 'A' ) && sensores.superficie[pos] == '_')
+		if ((sensores.terreno[pos] == 'T' || sensores.terreno[pos] == 'S' || sensores.terreno[pos] == 'G' || sensores.terreno[pos] == 'D' || sensores.terreno[pos] == 'K' || sensores.terreno[pos] == 'X' || sensores.terreno[pos] == 'A') && (sensores.superficie[pos] == '_' || sensores.superficie[pos] == 'j'))
 			return true;
 	}
 	else if (zapatillas)
 	{
-		if((sensores.terreno[pos] == 'T' || sensores.terreno[pos] == 'S' || sensores.terreno[pos] == 'G' || sensores.terreno[pos] == 'D' || sensores.terreno[pos] == 'K' || sensores.terreno[pos] == 'X' || sensores.terreno[pos] == 'B' ) && sensores.superficie[pos] == '_')
+		if ((sensores.terreno[pos] == 'T' || sensores.terreno[pos] == 'S' || sensores.terreno[pos] == 'G' || sensores.terreno[pos] == 'D' || sensores.terreno[pos] == 'K' || sensores.terreno[pos] == 'X' || sensores.terreno[pos] == 'B') && (sensores.superficie[pos] == '_' || sensores.superficie[pos] == 'j'))
 			return true;
 	}
 	else
 	{
-		if((sensores.terreno[pos] == 'T' || sensores.terreno[pos] == 'S' || sensores.terreno[pos] == 'G' || sensores.terreno[pos] == 'D' || sensores.terreno[pos] == 'K' || sensores.terreno[pos] == 'X' ) && sensores.superficie[pos] == '_')
+		if ((sensores.terreno[pos] == 'T' || sensores.terreno[pos] == 'S' || sensores.terreno[pos] == 'G' || sensores.terreno[pos] == 'D' || sensores.terreno[pos] == 'K' || sensores.terreno[pos] == 'X') && (sensores.superficie[pos] == '_' || sensores.superficie[pos] == 'j'))
 			return true;
 	}
 
 	// Cuando nos chocamos con algo reseteamos el ciclo
-	//if(sensores.superficie[pos] != '_')
+	// if(sensores.superficie[pos] != '_')
 	//{
 	//	paredEncontrad = false;
 	//	ha_chocado = true;
 	//}
+
+	cout << "////////////////////////////////////////////////////////////  " << pos << " " << sensores.superficie[pos] << endl;
 
 	return false;
 }
@@ -107,455 +106,470 @@ bool ComportamientoJugador::estaEnBucle()
 				filas_coincidentes++;
 				//cout<<"La fila actual es: "<<ultimasCuatro[i].first<<" comparada con : "<<ultimasCuatro[j].first<<endl;
 			}
-				
+
 			if(ultimasCuatro[i].second == ultimasCuatro[j].second)
 			{
 				columnas_coincidentes++;
 				//cout<<"La col actual es: "<<ultimasCuatro[i].second<<" comparada con : "<<ultimasCuatro[j].second<<endl;
 			}
-				
+
 		}
 	}
 	*/
 
-	cout<<"kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk "<<ultimasCuatro[0].first<<" "<<ultimasCuatro[0].second<<ultimasCuatro[4].first<<" "<<ultimasCuatro[4].second<<endl;
+	// cout<<"kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk "<<ultimasCuatro[0].first<<" "<<ultimasCuatro[0].second<<ultimasCuatro[4].first<<" "<<ultimasCuatro[4].second<<endl;
 
 	// tienen que coincidir las posiciones del vector en 0 y el vector en 4 para que este en bucle
-	//if( (filas_coincidentes == 8 && columnas_coincidentes == 8) || (filas_coincidentes == 12 && columnas_coincidentes == 12) )
-	if(ultimasCuatro[0].first == ultimasCuatro[4].first && ultimasCuatro[4].second == ultimasCuatro[0].second)
+	// if( (filas_coincidentes == 8 && columnas_coincidentes == 8) || (filas_coincidentes == 12 && columnas_coincidentes == 12) )
+	if (ultimasCuatro[0].first == ultimasCuatro[4].first && ultimasCuatro[4].second == ultimasCuatro[0].second)
 		return true;
 	else
 	{
-		if(num_giros > 7)
+		if (num_giros > 7)
 			return true;
 		else
 			return false;
 	}
-		
-
 }
 
 bool ComportamientoJugador::restart()
 {
-	// Reiniciamos todo con el constructor 
+	// Reiniciamos todo con el constructor
 	// Dar el valor inicial a las variables de estado
-      fil = col = fil_aux = col_aux = 99;
-      brujula = max_giros = posicion_vector = esta_en_bucle = has_esperado = num_giros = num_ciclo_sin_descubrir = 0; // max_giros contabiliza el numero de veces que gira sobre si mismo antes de tener que volver sobre sus propios pasos
-      origen = (brujula+2)%4; // origen tiene que apuntar al lugar contrario a donde nos dirigimos
-      ultimaAccion = actIDLE;
-      girar_izq = false;
-      bien_situados = false;
-      primeraPared = true;
-      paredEncontrad = false;
-      girar_der = false;
-      ya_visitada = false;
-      final_ciclo = false;
-      ya_visitada_enfrente = false;
-      bikini = false;
-      zapatillas = false;
-      g_visto = false;
-      b_visto = false;
-      z_visto = false;
-      ha_chocado = false;
-      buen_spawn = false;
-	  cadena_acciones_finalizada = true;
-      has_repostado = false;
+	fil = col = fil_aux = col_aux = 99;
+	brujula = max_giros = posicion_vector = esta_en_bucle = has_esperado = num_giros = num_ciclo_sin_descubrir = 0; // max_giros contabiliza el numero de veces que gira sobre si mismo antes de tener que volver sobre sus propios pasos
+	origen = (brujula + 2) % 4;																						// origen tiene que apuntar al lugar contrario a donde nos dirigimos
+	ultimaAccion = actIDLE;
+	girar_izq = false;
+	bien_situados = false;
+	primeraPared = true;
+	paredEncontrad = false;
+	girar_der = false;
+	ya_visitada = false;
+	final_ciclo = false;
+	ya_visitada_enfrente = false;
+	bikini = false;
+	zapatillas = false;
+	g_visto = false;
+	b_visto = false;
+	z_visto = false;
+	ha_chocado = false;
+	buen_spawn = false;
+	cadena_acciones_finalizada = true;
+	has_repostado = false;
+	avanzar = true;
 
-	  for(int i=0;i<5;i++)
-        ultimasCuatro.push_back(std::make_pair(i*2,i*2));
+	for (int i = 0; i < 5; i++)
+		ultimasCuatro.push_back(std::make_pair(i * 2, i * 2));
 
-      for(int i=0;i<MAX_FILAS;i++)
-      {
-        for(int j=0;j<MAX_COLUMNAS;j++)
-        {
-          esta_pintada[i][j] = false;
-          ciclo_anterior[i][j] = false;
-        }
-      }
+	for (int i = 0; i < MAX_FILAS; i++)
+	{
+		for (int j = 0; j < MAX_COLUMNAS; j++)
+		{
+			esta_pintada[i][j] = false;
+			ciclo_anterior[i][j] = false;
+		}
+	}
 }
 
-bool ComportamientoJugador::busca(const char casilla, pair<int,int> & par, Sensores sensores)
+bool ComportamientoJugador::busca(const char casilla, pair<int, int> &par, Sensores sensores)
 {
 	int fila_aux,
 		columna_aux;
 	bool encontrado = false;
-	for (int i = 0; i <  sensores.terreno.size(); ++i)
+	for (int i = 0; i < sensores.terreno.size(); ++i)
 	{
 		switch (brujula)
 		{
 		case 0:
-			if( i == 0)
+			if (i == 0)
 			{
 				fila_aux = fil;
 				columna_aux = col;
 			}
-			else if( i == 1)
+			else if (i == 1)
 			{
-				fila_aux = fil -1;
-				columna_aux = col-1;
+				fila_aux = fil - 1;
+				columna_aux = col - 1;
 			}
-			else if( i == 2)
+			else if (i == 2)
 			{
-				fila_aux = fil-1;
+				fila_aux = fil - 1;
 				columna_aux = col;
 			}
-			else if( i == 3)
+			else if (i == 3)
 			{
-				fila_aux = fil-1;
-				columna_aux = col+1;
+				fila_aux = fil - 1;
+				columna_aux = col + 1;
 			}
-			else if( i == 4)
+			else if (i == 4)
 			{
-				fila_aux = fil-2;
-				columna_aux = col-2;
+				fila_aux = fil - 2;
+				columna_aux = col - 2;
 			}
-			else if( i == 5)
+			else if (i == 5)
 			{
-				fila_aux = fil-2;
-				columna_aux = col-1;
+				fila_aux = fil - 2;
+				columna_aux = col - 1;
 			}
-			else if( i == 6)
+			else if (i == 6)
 			{
-				fila_aux = fil-2;
+				fila_aux = fil - 2;
 				columna_aux = col;
 			}
-			else if( i == 7)
+			else if (i == 7)
 			{
-				fila_aux = fil-2;
-				columna_aux = col+1;
+				fila_aux = fil - 2;
+				columna_aux = col + 1;
 			}
-			else if( i == 8)
+			else if (i == 8)
 			{
-				fila_aux = fil-2;
-				columna_aux = col+2;
+				fila_aux = fil - 2;
+				columna_aux = col + 2;
 			}
-			else if( i == 9)
+			else if (i == 9)
 			{
-				fila_aux = fil-3;
-				columna_aux = col-3;
+				fila_aux = fil - 3;
+				columna_aux = col - 3;
 			}
-			else if( i == 10)
+			else if (i == 10)
 			{
-				fila_aux = fil-3;
-				columna_aux = col-2;
+				fila_aux = fil - 3;
+				columna_aux = col - 2;
 			}
-			else if( i == 11)
+			else if (i == 11)
 			{
-				fila_aux = fil-3;
-				columna_aux = col-1;
+				fila_aux = fil - 3;
+				columna_aux = col - 1;
 			}
-			else if( i == 12)
+			else if (i == 12)
 			{
-				fila_aux = fil-3;
+				fila_aux = fil - 3;
 				columna_aux = col;
 			}
-			else if( i == 13)
+			else if (i == 13)
 			{
-				fila_aux = fil-3;
-				columna_aux = col+1;
+				fila_aux = fil - 3;
+				columna_aux = col + 1;
 			}
-			else if( i == 14)
+			else if (i == 14)
 			{
-				fila_aux = fil-3;
-				columna_aux = col+2;
+				fila_aux = fil - 3;
+				columna_aux = col + 2;
 			}
-			else if( i == 15)
+			else if (i == 15)
 			{
-				fila_aux = fil-3;
-				columna_aux = col+3;
+				fila_aux = fil - 3;
+				columna_aux = col + 3;
 			}
 
 			break;
 
 		case 1:
-			if( i == 0)
+			if (i == 0)
 			{
 				fila_aux = fil;
 				columna_aux = col;
 			}
-			else if( i == 1)
+			else if (i == 1)
 			{
-				fila_aux = fil-1;
-				columna_aux = col+1;
+				fila_aux = fil - 1;
+				columna_aux = col + 1;
 			}
-			else if( i == 2)
+			else if (i == 2)
 			{
 				fila_aux = fil;
-				columna_aux = col+1;
+				columna_aux = col + 1;
 			}
-			else if( i == 3)
+			else if (i == 3)
 			{
-				fila_aux = fil+1;
-				columna_aux = col+1;
+				fila_aux = fil + 1;
+				columna_aux = col + 1;
 			}
-			else if( i == 4)
+			else if (i == 4)
 			{
-				fila_aux = fil-2;
-				columna_aux = col+2;
+				fila_aux = fil - 2;
+				columna_aux = col + 2;
 			}
-			else if( i == 5)
+			else if (i == 5)
 			{
-				fila_aux = fil-1;
-				columna_aux = col+2;
+				fila_aux = fil - 1;
+				columna_aux = col + 2;
 			}
-			else if( i == 6)
-			{
-				fila_aux = fil;
-				columna_aux = col+2;
-			}
-			else if( i == 7)
-			{
-				fila_aux = fil+1;
-				columna_aux = col+2;
-			}
-			else if( i == 8)
-			{
-				fila_aux = fil+2;
-				columna_aux = col+2;
-			}
-			else if( i == 9)
-			{
-				fila_aux = fil-3;
-				columna_aux = col+3;
-			}
-			else if( i == 10)
-			{
-				fila_aux = fil-2;
-				columna_aux = col+3;
-			}
-			else if( i == 11)
-			{
-				fila_aux = fil-1;
-				columna_aux = col+3;
-			}
-			else if( i == 12)
+			else if (i == 6)
 			{
 				fila_aux = fil;
-				columna_aux = col+3;
+				columna_aux = col + 2;
 			}
-			else if( i == 13)
+			else if (i == 7)
 			{
-				fila_aux = fil+1;
-				columna_aux = col+3;
+				fila_aux = fil + 1;
+				columna_aux = col + 2;
 			}
-			else if( i == 14)
+			else if (i == 8)
 			{
-				fila_aux = fil+2;
-				columna_aux = col+3;
+				fila_aux = fil + 2;
+				columna_aux = col + 2;
 			}
-			else if( i == 15)
+			else if (i == 9)
 			{
-				fila_aux = fil+3;
-				columna_aux = col+3;
+				fila_aux = fil - 3;
+				columna_aux = col + 3;
+			}
+			else if (i == 10)
+			{
+				fila_aux = fil - 2;
+				columna_aux = col + 3;
+			}
+			else if (i == 11)
+			{
+				fila_aux = fil - 1;
+				columna_aux = col + 3;
+			}
+			else if (i == 12)
+			{
+				fila_aux = fil;
+				columna_aux = col + 3;
+			}
+			else if (i == 13)
+			{
+				fila_aux = fil + 1;
+				columna_aux = col + 3;
+			}
+			else if (i == 14)
+			{
+				fila_aux = fil + 2;
+				columna_aux = col + 3;
+			}
+			else if (i == 15)
+			{
+				fila_aux = fil + 3;
+				columna_aux = col + 3;
 			}
 			break;
 
 		case 2:
-			if( i == 0)
+			if (i == 0)
 			{
 				fila_aux = fil;
 				columna_aux = col;
 			}
-			else if( i == 1)
+			else if (i == 1)
 			{
-				fila_aux = fil+1;
-				columna_aux = col+1;
+				fila_aux = fil + 1;
+				columna_aux = col + 1;
 			}
-			else if( i == 2)
+			else if (i == 2)
 			{
-				fila_aux = fil+1;
+				fila_aux = fil + 1;
 				columna_aux = col;
 			}
-			else if( i == 3)
+			else if (i == 3)
 			{
-				fila_aux = fil+1;
-				columna_aux = col-1;
+				fila_aux = fil + 1;
+				columna_aux = col - 1;
 			}
-			else if( i == 4)
+			else if (i == 4)
 			{
-				fila_aux = fil+2;
-				columna_aux = col+2;
+				fila_aux = fil + 2;
+				columna_aux = col + 2;
 			}
-			else if( i == 5)
+			else if (i == 5)
 			{
-				fila_aux = fil+2;
-				columna_aux = col+1;
+				fila_aux = fil + 2;
+				columna_aux = col + 1;
 			}
-			else if( i == 6)
+			else if (i == 6)
 			{
-				fila_aux = fil+2;
+				fila_aux = fil + 2;
 				columna_aux = col;
 			}
-			else if( i == 7)
+			else if (i == 7)
 			{
-				fila_aux = fil+2;
-				columna_aux = col-1;
+				fila_aux = fil + 2;
+				columna_aux = col - 1;
 			}
-			else if( i == 8)
+			else if (i == 8)
 			{
-				fila_aux = fil+2;
-				columna_aux = col-2;
+				fila_aux = fil + 2;
+				columna_aux = col - 2;
 			}
-			else if( i == 9)
+			else if (i == 9)
 			{
-				fila_aux = fil+3;
-				columna_aux = col+3;
+				fila_aux = fil + 3;
+				columna_aux = col + 3;
 			}
-			else if( i == 10)
+			else if (i == 10)
 			{
-				fila_aux = fil+3;
-				columna_aux = col+2;
+				fila_aux = fil + 3;
+				columna_aux = col + 2;
 			}
-			else if( i == 11)
+			else if (i == 11)
 			{
-				fila_aux = fil+3;
-				columna_aux = col+1;
+				fila_aux = fil + 3;
+				columna_aux = col + 1;
 			}
-			else if( i == 12)
+			else if (i == 12)
 			{
-				fila_aux = fil+3;
+				fila_aux = fil + 3;
 				columna_aux = col;
 			}
-			else if( i == 13)
+			else if (i == 13)
 			{
-				fila_aux = fil+3;
-				columna_aux = col-1;
+				fila_aux = fil + 3;
+				columna_aux = col - 1;
 			}
-			else if( i == 14)
+			else if (i == 14)
 			{
-				fila_aux = fil+3;
-				columna_aux = col-2;
+				fila_aux = fil + 3;
+				columna_aux = col - 2;
 			}
-			else if( i == 15)
+			else if (i == 15)
 			{
-				fila_aux = fil+3;
-				columna_aux = col-3;
+				fila_aux = fil + 3;
+				columna_aux = col - 3;
 			}
 			break;
 		case 3:
-			if( i == 0)
+			if (i == 0)
 			{
 				fila_aux = fil;
 				columna_aux = col;
 			}
-			else if( i == 1)
+			else if (i == 1)
 			{
-				fila_aux = fil+1;
-				columna_aux = col-1;
+				fila_aux = fil + 1;
+				columna_aux = col - 1;
 			}
-			else if( i == 2)
+			else if (i == 2)
 			{
 				fila_aux = fil;
-				columna_aux = col-1;
+				columna_aux = col - 1;
 			}
-			else if( i == 3)
+			else if (i == 3)
 			{
-				fila_aux = fil-1;
-				columna_aux = col-1;
+				fila_aux = fil - 1;
+				columna_aux = col - 1;
 			}
-			else if( i == 4)
+			else if (i == 4)
 			{
-				fila_aux = fil+2;
-				columna_aux = col-2;
+				fila_aux = fil + 2;
+				columna_aux = col - 2;
 			}
-			else if( i == 5)
+			else if (i == 5)
 			{
-				fila_aux = fil+1;
-				columna_aux = col-2;
+				fila_aux = fil + 1;
+				columna_aux = col - 2;
 			}
-			else if( i == 6)
-			{
-				fila_aux = fil;
-				columna_aux = col-2;
-			}
-			else if( i == 7)
-			{
-				fila_aux = fil-1;
-				columna_aux = col-2;
-			}
-			else if( i == 8)
-			{
-				fila_aux = fil-2;
-				columna_aux = col-2;
-			}
-			else if( i == 9)
-			{
-				fila_aux = fil+3;
-				columna_aux = col-3;
-			}
-			else if( i == 10)
-			{
-				fila_aux = fil+2;
-				columna_aux = col-3;
-			}
-			else if( i == 11)
-			{
-				fila_aux = fil+1;
-				columna_aux = col-3;
-			}
-			else if( i == 12)
+			else if (i == 6)
 			{
 				fila_aux = fil;
-				columna_aux = col-3;
+				columna_aux = col - 2;
 			}
-			else if( i == 13)
+			else if (i == 7)
 			{
-				fila_aux = fil-1;
-				columna_aux = col-3;
+				fila_aux = fil - 1;
+				columna_aux = col - 2;
 			}
-			else if( i == 14)
+			else if (i == 8)
 			{
-				fila_aux = fil-2;
-				columna_aux = col-3;
+				fila_aux = fil - 2;
+				columna_aux = col - 2;
 			}
-			else if( i == 15)
+			else if (i == 9)
 			{
-				fila_aux = fil-3;
-				columna_aux = col-3;
+				fila_aux = fil + 3;
+				columna_aux = col - 3;
+			}
+			else if (i == 10)
+			{
+				fila_aux = fil + 2;
+				columna_aux = col - 3;
+			}
+			else if (i == 11)
+			{
+				fila_aux = fil + 1;
+				columna_aux = col - 3;
+			}
+			else if (i == 12)
+			{
+				fila_aux = fil;
+				columna_aux = col - 3;
+			}
+			else if (i == 13)
+			{
+				fila_aux = fil - 1;
+				columna_aux = col - 3;
+			}
+			else if (i == 14)
+			{
+				fila_aux = fil - 2;
+				columna_aux = col - 3;
+			}
+			else if (i == 15)
+			{
+				fila_aux = fil - 3;
+				columna_aux = col - 3;
 			}
 			break;
 		}
 
-		//cout<<"Posicion del triangulo "<<i<<" :"<<sensores.terreno[i]<<endl;
+		// cout<<"Posicion del triangulo "<<i<<" :"<<sensores.terreno[i]<<endl;
 		if (sensores.terreno[i] == casilla)
 		{
-			//cout<<"coordenada a introducir en el pair :"<<fila_aux<<" "<<columna_aux<<endl;
-			par = std::make_pair(fila_aux,columna_aux);
+			// cout<<"coordenada a introducir en el pair :"<<fila_aux<<" "<<columna_aux<<endl;
+			par = std::make_pair(fila_aux, columna_aux);
 			encontrado = true;
 		}
 	}
 
-	//cout<<"coordenada devuelta en el pair :"<<par.first<<" "<<par.second<<endl;
+	// cout<<"coordenada devuelta en el pair :"<<par.first<<" "<<par.second<<endl;
 	return encontrado;
 }
 
-Action ComportamientoJugador::think(Sensores sensores){
-	
+Action ComportamientoJugador::think(Sensores sensores)
+{
+
 	// si te ha comido un lobo resetea todas las variables de estado
-	if(sensores.reset)
+	if (sensores.reset)
 	{
-		//scout<<"Tan comiooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo."<<endl;
+		// scout<<"Tan comiooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo."<<endl;
 		restart();
 	}
-		
+
+	// comprobamos si hemos spawnedado bien o no
+	if (!puedoPisar(0, sensores))
+		buen_spawn = false;
+	else
+		buen_spawn = true;
+
+	
 
 	Action accion = actIDLE;
 
 	cout << "Posicion: fila " << sensores.posF << " columna " << sensores.posC << " ";
-	switch(sensores.sentido)
+	switch (sensores.sentido)
 	{
-		case 0: cout << "Norte" << endl; break;
-		case 1: cout << "Este" << endl; break;
-		case 2: cout << "Sur " << endl; break;
-		case 3: cout << "Oeste" << endl; break;
+	case 0:
+		cout << "Norte" << endl;
+		break;
+	case 1:
+		cout << "Este" << endl;
+		break;
+	case 2:
+		cout << "Sur " << endl;
+		break;
+	case 3:
+		cout << "Oeste" << endl;
+		break;
 	}
 	cout << "Terreno: ";
-	for (int i=0; i<sensores.terreno.size(); i++)
+	for (int i = 0; i < sensores.terreno.size(); i++)
 		cout << sensores.terreno[i];
 	cout << endl;
 
 	cout << "Superficie: ";
-	for (int i=0; i<sensores.superficie.size(); i++)
+	for (int i = 0; i < sensores.superficie.size(); i++)
 		cout << sensores.superficie[i];
 	cout << endl;
 
@@ -564,65 +578,77 @@ Action ComportamientoJugador::think(Sensores sensores){
 	cout << "Vida: " << sensores.vida << endl;
 	cout << endl;
 
-	switch(ultimaAccion)
+	switch (ultimaAccion)
 	{
-		case actFORWARD: // si mi utima accion fue ir para delante
-			switch(brujula)
-			{
-				case 0 : fil--; fil_aux--; break;
-				case 1 : col++; col_aux++;  break;
-				case 2 : fil++; fil_aux++;break;
-				case 3 : col--; col_aux--;break;
-			}
+	case actFORWARD: // si mi utima accion fue ir para delante
+		switch (brujula)
+		{
+		case 0:
+			fil--;
+			fil_aux--;
+			break;
+		case 1:
+			col++;
+			col_aux++;
+			break;
+		case 2:
+			fil++;
+			fil_aux++;
+			break;
+		case 3:
+			col--;
+			col_aux--;
+			break;
+		}
 
-			// avanzamos modulo 4 en el vectoir de las ultimas 5
-			posicion_vector = (posicion_vector+1)%5;
+		// avanzamos modulo 4 en el vectoir de las ultimas 5
+		posicion_vector = (posicion_vector + 1) % 5;
 
 		break;
 
-		case actTURN_R: // giramos a la derecha
-			brujula = (brujula+1)%4;// ya que trabajamos con 4 valores nada mas
-			//girar_izq = (rand()%2 == 0);
+	case actTURN_R:					 // giramos a la derecha
+		brujula = (brujula + 1) % 4; // ya que trabajamos con 4 valores nada mas
+									 // girar_izq = (rand()%2 == 0);
 		break;
 
-		case actTURN_L: // giramos a la izquierda
-			brujula = (brujula+3)%4;// ya que trabajamos con 4 valores nada mas y c++ con valores negativos caca,
-			//girar_izq = (rand()%2 == 0);// seria igual si le sumamos 3 ya que va a dar la vuelta al estar en modulo 4
-		break;						
-
+	case actTURN_L:					 // giramos a la izquierda
+		brujula = (brujula + 3) % 4; // ya que trabajamos con 4 valores nada mas y c++ con valores negativos caca,
+									 // girar_izq = (rand()%2 == 0);// seria igual si le sumamos 3 ya que va a dar la vuelta al estar en modulo 4
+		break;
 	}
 
-	
+	cout << "fil: " << fil << endl;
+	cout << "col: " << col << endl;
+	cout << "brujula: " << brujula << endl;
+	cout << "origen: " << origen << endl;
+	cout << "Mirando ha :" << sensores.terreno[2] << endl;
+	cout << "buen spawn :" << buen_spawn << endl;
 
-	cout<< "fil: "<<fil<<endl;
-	cout<< "col: "<<col<<endl;
-	cout<< "brujula: "<<brujula<<endl;
-	cout<< "origen: "<<origen<<endl;
-	cout<<"Mirando ha :"<<sensores.terreno[2]<<endl;
-	
-	if (paredEncontrad){
-		cout<<"paredEncontrada es true "<<endl;
-	} else {
-		cout<<"paredEncontrada es false "<<endl;
-
+	if (paredEncontrad)
+	{
+		cout << "paredEncontrada es true " << endl;
+	}
+	else
+	{
+		cout << "paredEncontrada es false " << endl;
 	}
 
-	if(sensores.terreno[0] == 'G' && !bien_situados)
+	if (sensores.terreno[0] == 'G' && !bien_situados)
 	{
 		fil = sensores.posF;
 		col = sensores.posC;
 		bien_situados = true;
-		//paredEncontrad = false;
+		paredEncontrad = false;
 	}
 
-	if(sensores.terreno[0] == 'D' && !zapatillas)
+	if (sensores.terreno[0] == 'D' && !zapatillas)
 	{
 		zapatillas = true;
 		paredEncontrad = false;
 		primeraPared = true;
 	}
 
-	if(sensores.terreno[0] == 'K' && !bikini)
+	if (sensores.terreno[0] == 'K' && !bikini)
 	{
 		bikini = true;
 		paredEncontrad = false;
@@ -718,110 +744,96 @@ Action ComportamientoJugador::think(Sensores sensores){
 	// Antes de girar a la izquierda o avanzar comprobamos que no hubieramos visitado ya esa posicion
 	switch (brujula)
 	{
-		case 0:
-			ya_visitada = ciclo_anterior[fil_aux - 1][col_aux - 1];
-			ya_visitada_enfrente = ciclo_anterior[fil_aux - 1][col_aux];
+	case 0:
+		ya_visitada = ciclo_anterior[fil_aux - 1][col_aux - 1];
+		ya_visitada_enfrente = ciclo_anterior[fil_aux - 1][col_aux];
 		break;
-		case 1:
-			ya_visitada = ciclo_anterior[fil_aux - 1][col_aux + 1];
-			ya_visitada_enfrente = ciclo_anterior[fil_aux][col_aux + 1];
+	case 1:
+		ya_visitada = ciclo_anterior[fil_aux - 1][col_aux + 1];
+		ya_visitada_enfrente = ciclo_anterior[fil_aux][col_aux + 1];
 		break;
-		case 2:
-			ya_visitada = ciclo_anterior[fil_aux + 1][col_aux + 1];
-			ya_visitada_enfrente = ciclo_anterior[fil_aux + 1][col_aux];
+	case 2:
+		ya_visitada = ciclo_anterior[fil_aux + 1][col_aux + 1];
+		ya_visitada_enfrente = ciclo_anterior[fil_aux + 1][col_aux];
 		break;
-		case 3:
-			ya_visitada = ciclo_anterior[fil_aux + 1][col_aux - 1];
-			ya_visitada_enfrente = ciclo_anterior[fil_aux][col_aux - 1];
+	case 3:
+		ya_visitada = ciclo_anterior[fil_aux + 1][col_aux - 1];
+		ya_visitada_enfrente = ciclo_anterior[fil_aux][col_aux - 1];
 		break;
 	}
 
+	// cout<<"Hay zapatillas? "<<zapatillas<<z_visto<<endl;
 
-	//cout<<"Hay zapatillas? "<<zapatillas<<z_visto<<endl;
-	
-// Comprobammos con los sensores si estamos viendo alguna de estas casillas
+	// Comprobammos con los sensores si estamos viendo alguna de estas casillas
 
 	// Definimos las dos variables locales que nos serviran para representar las posiciones del cada casilla del sensor en el mapa
-	//int fila_aux,columna_aux;
-		if (busca('G',posiciones, sensores)  && !bien_situados && !g_visto)
-		{
-			//cout<<" ............................................ ............................................"<<posiciones.first<<" "<<posiciones.second<<endl;
-			irHasta(fil,col,posiciones.first,posiciones.second);
-			//irHasta(posiciones.first,posiciones.second,fil,col);
-			g_visto = true;
-		}
-		else if (busca('K',posiciones, sensores) && !bikini && !b_visto)
-		{
-			irHasta(fil,col,posiciones.first,posiciones.second);
-			//irHasta(posiciones.first,posiciones.second,fil,col);
-			b_visto = true;
-			cout<<"ya no vuelves a entrar aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"<<endl;
-		}
-		else if (busca('D',posiciones, sensores) && !zapatillas && !z_visto)
-		{
-			
-			irHasta(fil,col,posiciones.first,posiciones.second);
-			//irHasta(posiciones.first,posiciones.second,fil,col);
-			z_visto = true;
-		}
-		else if (busca('X',posiciones, sensores) && !has_repostado)
-		{
-			//cout<<"EOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"<<endl;
-			irHasta(fil,col,posiciones.first,posiciones.second);
+	// int fila_aux,columna_aux;
+	if (busca('G', posiciones, sensores) && !bien_situados && !g_visto)
+	{
+		// cout<<" ............................................ ............................................"<<posiciones.first<<" "<<posiciones.second<<endl;
+		irHasta(fil, col, posiciones.first, posiciones.second);
+		// irHasta(posiciones.first,posiciones.second,fil,col);
+		g_visto = true;
+	}
+	else if (busca('K', posiciones, sensores) && !bikini && !b_visto)
+	{
+		irHasta(fil, col, posiciones.first, posiciones.second);
+		// irHasta(posiciones.first,posiciones.second,fil,col);
+		b_visto = true;
+		// cout<<"ya no vuelves a entrar aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"<<endl;
+	}
+	else if (busca('D', posiciones, sensores) && !zapatillas && !z_visto)
+	{
 
-			// si encontramos una estacion de carga nos quedamos en actIDLE hasta que la carguemos al maximo
-			for(int i = 0; i < (3000 - sensores.bateria) ;i = i + 10)
-				cadenaAcciones.push_back(actIDLE);
-			
-			has_repostado = true;
-		}
+		irHasta(fil, col, posiciones.first, posiciones.second);
+		// irHasta(posiciones.first,posiciones.second,fil,col);
+		z_visto = true;
+	}
+	else if (busca('X', posiciones, sensores) && !has_repostado)
+	{
+		// cout<<"EOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"<<endl;
+		irHasta(fil, col, posiciones.first, posiciones.second);
 
+		// si encontramos una estacion de carga nos quedamos en actIDLE hasta que la carguemos al maximo
+		for (int i = 0; i < (3000 - sensores.bateria); i = i + 10)
+			cadenaAcciones.push_back(actIDLE);
 
-
-
-
-
-
-
+		has_repostado = true;
+	}
 
 	// si esta en bucle y no esta en frente de una pared que avance para salir del bucle
-	if((estaEnBucle() && puedoPisar(2,sensores)) || !buen_spawn)
+	if ((estaEnBucle() && puedoPisar(2, sensores)) || !buen_spawn)
 	{
 		esta_en_bucle++;
-		//cout<<"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"<<endl;
-		if(esta_en_bucle > 4 && puedoPisar(2,sensores))
+		// cout<<"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"<<endl;
+		if (esta_en_bucle > 4 && puedoPisar(2, sensores))
 		{
-			cout<<"ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"<<endl;
+			// cout<<"ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"<<endl;
 			paredEncontrad = false;
 			esta_en_bucle = 0;
 		}
-			
 	}
-		
-	
-		
-		
 
 	// Comprobamos antes de nada si tenemos acciones pendietes en el vector
 	if (cadenaAcciones.empty())
 	{
 		// si hacemos spawn donde no deberiamos
-		if(!puedoPisar(0,sensores) && !buen_spawn)
+		if (!puedoPisar(0, sensores) && !buen_spawn)
 		{
-			for(int i=0;i< sensores.terreno.size() || !buen_spawn;i++)
+			for (int i = 0; i < sensores.terreno.size() || !buen_spawn; i++)
 			{
-				if(puedoPisar(i,sensores))
+				if (puedoPisar(i, sensores))
 				{
 					cadena_acciones_finalizada = false;
 					buen_spawn = true;
-					busca(sensores.terreno[i],posiciones, sensores);
-					irHasta(fil,col,posiciones.first,posiciones.second);
+					busca(sensores.terreno[i], posiciones, sensores);
+					irHasta(fil, col, posiciones.first, posiciones.second);
 					break;
 				}
 			}
-			
-			// si aun asi no encontramos nada giramos a la derecha hasta que encontremos algo o detecte que es un ciclo y avance 
-			if(!buen_spawn)
+
+			// si aun asi no encontramos nada giramos a la derecha hasta que encontremos algo o detecte que es un ciclo y avance
+			if (!buen_spawn)
 				accion = actTURN_R;
 		}
 		else if (girar_izq) // Solo esta activado si hay que girar obligatoriamente porque nos vamos a despegar de la pared
@@ -840,7 +852,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 			// Ponemos el girar_izq a false otra vez
 			girar_der = false;
 		}
-		else if(!paredEncontrad && puedoPisar(2,sensores)) // Comprobamos si estamos pegados a una pared o no para fijarnos como continua esta
+		else if (!paredEncontrad && puedoPisar(2, sensores)) // Comprobamos si estamos pegados a una pared o no para fijarnos como continua esta
 		{
 			accion = actFORWARD;
 			cout << "Avanzo" << endl;
@@ -848,100 +860,97 @@ Action ComportamientoJugador::think(Sensores sensores){
 			// Almacenamos la posicion
 			esta_pintada[fil_aux][col_aux] = true;
 		}
-		else if (puedoPisar(2,sensores) && !ya_visitada_enfrente) // Comprobamos si podriamos avanzar hacia delante
+		else if (puedoPisar(2, sensores) && !ya_visitada_enfrente) // Comprobamos si podriamos avanzar hacia delante
 		{
 			// En caso de que estemos en pared antes de avanzar nos fijamos en comon continua esta
-				// Si es la primera vez que chocamso con una pared almacenamos la posicion para saber cuando hemos dado una vuelta
-				if (primeraPared)
+			// Si es la primera vez que chocamso con una pared almacenamos la posicion para saber cuando hemos dado una vuelta
+			if (primeraPared)
+			{
+				primeraPared = false;
+				principio_fil = fil_aux;
+				principio_col = col_aux;
+			}
+			else // Si no es la primera vez que nos chocamos con una pared comprobamos cuando damos la vuelta
+			{
+				if (fil_aux == principio_fil && col_aux == principio_col)
 				{
-					primeraPared = false;
-					principio_fil = fil_aux;
-					principio_col = col_aux;
-				}
-				else // Si no es la primera vez que nos chocamos con una pared comprobamos cuando damos la vuelta
-				{
-					if (fil_aux == principio_fil && col_aux == principio_col)
+					// Si esta rodeando por dentro (mirar que no gire a la derecha si esta rodeando por fuera)
+					if (ya_visitada)
 					{
-						// Si esta rodeando por dentro (mirar que no gire a la derecha si esta rodeando por fuera)
-						if(ya_visitada)
-						{
-							girar_der = true;
-							principio_fil = fil_aux - 1;
-							principio_fil = col_aux + 1;
-						}
-							
-						else
-						{
-							girar_izq = true;
-							principio_fil = fil_aux + 1;
-							principio_fil = col_aux - 1;
-						}
-							
-						
-						// BORRAR PONER NORMALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-						//principio_fil = fil_aux + 1;
-						//principio_fil = col_aux - 1;
-						// final_ciclo = true;
-						for (int i = 0; i < MAX_FILAS; i++)
-						{
-							for (int j = 0; j < MAX_COLUMNAS; j++)
-							{
-								ciclo_anterior[i][j] = esta_pintada[i][j];
-							}
-						}
+						girar_der = true;
+						principio_fil = fil_aux - 1;
+						principio_fil = col_aux + 1;
 					}
+
 					else
 					{
-						// final_ciclo = false;
+						girar_izq = true;
+						principio_fil = fil_aux + 1;
+						principio_fil = col_aux - 1;
+					}
+
+					// BORRAR PONER NORMALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+					// principio_fil = fil_aux + 1;
+					// principio_fil = col_aux - 1;
+					// final_ciclo = true;
+					for (int i = 0; i < MAX_FILAS; i++)
+					{
+						for (int j = 0; j < MAX_COLUMNAS; j++)
+						{
+							ciclo_anterior[i][j] = esta_pintada[i][j];
+						}
 					}
 				}
-
-				// Comprobamos si el hueco [1] podria ser accesible o no ya que eso marcaria cambio en pared y habria que girar a la izquierda
-				// (suponiendo que nos movemos siempre hacia la derecha)
-				if (puedoPisar(1,sensores))
+				else
 				{
-					// Hay que avanzar y luego girar izq
-					accion = actFORWARD;
-					cout << "Avanzo" << endl;
-
-					// Almacenamos la posicion
-					esta_pintada[fil_aux][col_aux] = true;
-					cout<<"ooooooooooooooooooooooooooooooooooooooooooooo"<<ya_visitada<<endl;
-					if (!ya_visitada) //|| !final_ciclo)
-						girar_izq = true;
-					//else if (!ya_visitada && //estyo rodeando por fuera)	// intentamos rodear por fuera cuando rodeamos por fuera
-						//girar_der = true; // pfff esto lo quitas luego. NO OLVIDAR!
+					// final_ciclo = false;
 				}
-				else // Si no es el caso avanzamos normal
-				{
-					accion = actFORWARD;
-					cout << "Avanzo" << endl;
+			}
 
-					// Almacenamos la posicion
-					esta_pintada[fil_aux][col_aux] = true;
-				}
-			
+			// Comprobamos si el hueco [1] podria ser accesible o no ya que eso marcaria cambio en pared y habria que girar a la izquierda
+			// (suponiendo que nos movemos siempre hacia la derecha)
+			if (puedoPisar(1, sensores))
+			{
+				// Hay que avanzar y luego girar izq
+				accion = actFORWARD;
+				cout << "Avanzo" << endl;
+
+				// Almacenamos la posicion
+				esta_pintada[fil_aux][col_aux] = true;
+				// cout<<"ooooooooooooooooooooooooooooooooooooooooooooo"<<ya_visitada<<endl;
+				if (!ya_visitada) //|| !final_ciclo)
+					girar_izq = true;
+				// else if (!ya_visitada && //estyo rodeando por fuera)	// intentamos rodear por fuera cuando rodeamos por fuera
+				// girar_der = true; // pfff esto lo quitas luego. NO OLVIDAR!
+			}
+			else // Si no es el caso avanzamos normal
+			{
+				accion = actFORWARD;
+				cout << "Avanzo" << endl;
+
+				// Almacenamos la posicion
+				esta_pintada[fil_aux][col_aux] = true;
+			}
 		}
 		else // En caso de no poder avanzar nos habriamos chocado con un borde y habria que empezar a rodearlo
 		{
 			// En caso de que la pared no estuviera encontrada ya la marcamos como encontrada
-			cout<<"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"<<endl;
+			// cout<<"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"<<endl;
 			if (!paredEncontrad)
 			{
 				paredEncontrad = true;
-				 cout<<"WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"<<endl;
+				// cout<<"WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"<<endl;
 			}
 
 			accion = actTURN_R;
 			cout << "Giro a la der" << endl;
 
 			// si ha chocado y esta dando vueltas por una pared o algo que gire izq en vez de der
-			//if(ha_chocado && !puedoPisar(2,sensores))
+			// if(ha_chocado && !puedoPisar(2,sensores))
 			//{
 			//	accion = actTURN_L;
 			//	ha_chocado = false;
 			//}
-				
 		}
 	}
 	else
@@ -950,58 +959,88 @@ Action ComportamientoJugador::think(Sensores sensores){
 		accion = cadenaAcciones[0];
 		cadenaAcciones.erase(cadenaAcciones.begin());
 
-		cout<<"La proxima accion del vector es: "<<accion<<endl;
+		cout << "La proxima accion del vector es: " << accion << endl;
 
-		if( (accion == actFORWARD && !puedoPisar(2,sensores) ) && (cadena_acciones_finalizada || sensores.terreno[2] == 'M' || sensores.terreno[2] == 'P'))
+		if ((accion == actFORWARD && !puedoPisar(2, sensores)) && (cadena_acciones_finalizada || sensores.terreno[2] == 'M' || sensores.terreno[2] == 'P'))
 		{
-			cout<<"La accion pas a nulo por no poder pisar."<<endl;
+			cout << "La accion pas a nulo por no poder pisar." << endl;
 			accion = actIDLE;
 			cadenaAcciones.clear();
 		}
 
 		// Si hemos vuelto a donde estamos buscamos una pared y volvemos a poder ir a or u bikini o zapatillas o lo que sea si no hemos pasado
-		if(cadenaAcciones.empty() && has_esperado > 5)
+		if (cadenaAcciones.empty() && has_esperado > 5)
 		{
-			//paredEncontrad = false;
+			// paredEncontrad = false;
 			g_visto = false;
 			z_visto = false;
 			b_visto = false;
 
 			has_esperado = 0;
 		}
-			
+
 		// si esta empty el vector y la cadena de acciones esta finalizada ha acabado
-		if( !cadena_acciones_finalizada	&& cadenaAcciones.empty())
+		if (!cadena_acciones_finalizada && cadenaAcciones.empty())
 			cadena_acciones_finalizada = true;
 
 		// si nos han comido y ya no estamos en la casilla de bateria quitamos las demas actIDLE
-		if(accion == actIDLE && sensores.terreno[0] != 'X')
+		if (accion == actIDLE && sensores.terreno[0] != 'X')
 			cadenaAcciones.clear();
 	}
 
 	// si la ultima accion es avanzar almacenamos la posicion desde donde nos movemos en el vectopr de ultimasCuatro posiciones
-	if(ultimaAccion == actFORWARD)
+	if (ultimaAccion == actFORWARD)
 	{
 		ultimasCuatro[posicion_vector].first = fil_aux;
 		ultimasCuatro[posicion_vector].second = col_aux;
 
-		//cout<<"Las posiciones almacenadas en el vec pos "<<posicion_vector<<" son : "<<fil_aux<<" "<<col_aux<<endl;
+		// solo lo metemos en el mapa en caso de que no sea un pasillo
+		//if (puedoPisar(1, sensores) && puedoPisar(3, sensores))
+		//{
+			// metemos en el mapa de key las coodernadas para pder filtar luego por ellas
+
+			// el find cuando no encuenra la clave devulve la ultima posicion del vector
+			if (((RecuentoPasos.find(std::make_pair(fil_aux, col_aux))->first).first == (RecuentoPasos.end()->first).first) &&
+				((RecuentoPasos.find(std::make_pair(fil_aux, col_aux))->first).second == (RecuentoPasos.end()->first).second))
+			{
+				// si no existe ningun elemento con esa clave se la aniadimos al par con elemento 1
+				RecuentoPasos.insert({std::make_pair(fil_aux, col_aux), 1});
+			}
+			else
+			{
+				// incrementamos el numero de veces que pasamos por esa coordenada en el map
+				(RecuentoPasos.find(std::make_pair(fil_aux, col_aux))->second)++;
+
+				// si se da el cao estams ciclando y podemos avanzar buscando pared o girar y hacer lo suyo siempre que haya pasado mas de 1 vez por ahi para evitar pasillos tambien
+				if (puedoPisar(2, sensores) && (RecuentoPasos.find(std::make_pair(fil_aux, col_aux))->second) > 5)
+				{
+					paredEncontrad = false;
+				}
+				else if((RecuentoPasos.find(std::make_pair(fil_aux, col_aux))->second) > 5)
+				{
+					girar_der = true;
+					paredEncontrad = false;
+				}
+			}
+		//}
+
+		// cout<<"Las posiciones almacenadas en el vec pos "<<posicion_vector<<" son : "<<fil_aux<<" "<<col_aux<<endl;
 	}
-	
+
 	// si no estas avanzando o estas modo IDLE estas girando
-	if(ultimaAccion != actFORWARD && ultimaAccion != actIDLE)
+	if (ultimaAccion != actFORWARD && ultimaAccion != actIDLE)
 		num_giros++;
 	else
 		num_giros = 0;
 
-	has_esperado ++;
+	has_esperado++;
 	ultimaAccion = accion;
 
 	// Determinar el efecto de la ultima accion enviada
 	return accion;
 }
 
-int ComportamientoJugador::interact(Action accion,int valor)
+int ComportamientoJugador::interact(Action accion, int valor)
 {
-  return false;
+	return false;
 }
