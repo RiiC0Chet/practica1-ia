@@ -34,7 +34,7 @@ public:
     buen_spawn = false;
     cadena_acciones_finalizada = true;
     has_repostado = false;
-    avanzar = true;
+    aniadir_mapa = true;
 
     for (int i = 0; i < 5; i++)
       ultimasCuatro.push_back(std::make_pair(i * 2, i * 2));
@@ -120,7 +120,7 @@ private:
       g_visto, // Almacenamos si ya hemos visto una casilla para no volver hacia ella
       b_visto,
       z_visto,
-      avanzar; // comprobamos si estamos en un pasillo parano meterlo en el mapa
+      aniadir_mapa; // comprobamos si estamos en un pasillo parano meterlo en el mapa
 
   // Creamos un vector con las siguientes acciones a realizar por el personaje
   vector<Action> cadenaAcciones;

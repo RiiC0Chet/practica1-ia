@@ -157,7 +157,7 @@ bool ComportamientoJugador::restart()
 	buen_spawn = false;
 	cadena_acciones_finalizada = true;
 	has_repostado = false;
-	avanzar = true;
+	aniadir_mapa = true;
 
 	for (int i = 0; i < 5; i++)
 		ultimasCuatro.push_back(std::make_pair(i * 2, i * 2));
