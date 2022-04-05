@@ -991,6 +991,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 	return accion;
 }
 
-int ComportamientoJugador::interact(Action accion,int valor){
+int ComportamientoJugador::interact(Action accion,int valor)
+{
   return false;
 }
