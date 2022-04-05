@@ -97,7 +97,7 @@ bool ComportamientoJugador::estaEnBucle()
 {
 	int filas_coincidentes = 0,
 		columnas_coincidentes = 0;
-	
+	/*
 	for(int i=0;i<ultimasCuatro.size();i++)
 	{
 		for(int j=0;j<ultimasCuatro.size();j++)
@@ -116,11 +116,13 @@ bool ComportamientoJugador::estaEnBucle()
 				
 		}
 	}
+	*/
 
-	//cout<<"kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk "<<filas_coincidentes<<" "<<columnas_coincidentes<<endl;
+	cout<<"kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk "<<ultimasCuatro[0].first<<" "<<ultimasCuatro[0].second<<ultimasCuatro[4].first<<" "<<ultimasCuatro[4].second<<endl;
 
-	// tienen que coincidir cada uno 8 veces para qued este en bucle o 12
-	if( (filas_coincidentes == 8 && columnas_coincidentes == 8) || (filas_coincidentes == 12 && columnas_coincidentes == 12) )
+	// tienen que coincidir las posiciones del vector en 0 y el vector en 4 para que este en bucle
+	//if( (filas_coincidentes == 8 && columnas_coincidentes == 8) || (filas_coincidentes == 12 && columnas_coincidentes == 12) )
+	if(ultimasCuatro[0].first == ultimasCuatro[4].first && ultimasCuatro[4].second == ultimasCuatro[0].second)
 		return true;
 	else
 	{
@@ -159,7 +161,7 @@ bool ComportamientoJugador::restart()
 	  cadena_acciones_finalizada = true;
       has_repostado = false;
 
-	  for(int i=0;i<4;i++)
+	  for(int i=0;i<5;i++)
         ultimasCuatro.push_back(std::make_pair(i*2,i*2));
 
       for(int i=0;i<MAX_FILAS;i++)
@@ -523,7 +525,7 @@ bool ComportamientoJugador::busca(const char casilla, pair<int,int> & par, Senso
 		}
 	}
 
-	cout<<"coordenada devuelta en el pair :"<<par.first<<" "<<par.second<<endl;
+	//cout<<"coordenada devuelta en el pair :"<<par.first<<" "<<par.second<<endl;
 	return encontrado;
 }
 
@@ -573,8 +575,8 @@ Action ComportamientoJugador::think(Sensores sensores){
 				case 3 : col--; col_aux--;break;
 			}
 
-			// avanzamos modulo 4 en el vectoir de las ultimas 4
-			posicion_vector = (posicion_vector+1)%4;
+			// avanzamos modulo 4 en el vectoir de las ultimas 5
+			posicion_vector = (posicion_vector+1)%5;
 
 		break;
 
@@ -783,13 +785,13 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 
 	// si esta en bucle y no esta en frente de una pared que avance para salir del bucle
-	if(estaEnBucle() && puedoPisar(2,sensores))
+	if((estaEnBucle() && puedoPisar(2,sensores)) || !buen_spawn)
 	{
 		esta_en_bucle++;
 		//cout<<"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"<<endl;
 		if(esta_en_bucle > 4 && puedoPisar(2,sensores))
 		{
-		//	cout<<"ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"<<endl;
+			cout<<"ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"<<endl;
 			paredEncontrad = false;
 			esta_en_bucle = 0;
 		}
@@ -894,7 +896,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 					// Almacenamos la posicion
 					esta_pintada[fil_aux][col_aux] = true;
-
+					cout<<"ooooooooooooooooooooooooooooooooooooooooooooo"<<ya_visitada<<endl;
 					if (!ya_visitada) //|| !final_ciclo)
 						girar_izq = true;
 					//else if (!ya_visitada && //estyo rodeando por fuera)	// intentamos rodear por fuera cuando rodeamos por fuera
@@ -913,10 +915,11 @@ Action ComportamientoJugador::think(Sensores sensores){
 		else // En caso de no poder avanzar nos habriamos chocado con un borde y habria que empezar a rodearlo
 		{
 			// En caso de que la pared no estuviera encontrada ya la marcamos como encontrada
+			cout<<"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"<<endl;
 			if (!paredEncontrad)
 			{
 				paredEncontrad = true;
-				// cout<<"WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"<<endl;
+				 cout<<"WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"<<endl;
 			}
 
 			accion = actTURN_R;
@@ -949,19 +952,21 @@ Action ComportamientoJugador::think(Sensores sensores){
 		// Si hemos vuelto a donde estamos buscamos una pared y volvemos a poder ir a or u bikini o zapatillas o lo que sea si no hemos pasado
 		if(cadenaAcciones.empty() && has_esperado > 5)
 		{
-			paredEncontrad = false;
+			//paredEncontrad = false;
 			g_visto = false;
 			z_visto = false;
 			b_visto = false;
 
 			has_esperado = 0;
-
-			// si esta empty el vector y la cadena de acciones esta finalizada ha acabado
-			if( !cadena_acciones_finalizada	)
-				cadena_acciones_finalizada = true;
 		}
 			
-		
+		// si esta empty el vector y la cadena de acciones esta finalizada ha acabado
+		if( !cadena_acciones_finalizada	&& cadenaAcciones.empty())
+			cadena_acciones_finalizada = true;
+
+		// si nos han comido y ya no estamos en la casilla de bateria quitamos las demas actIDLE
+		if(accion == actIDLE && sensores.terreno[0] != 'X')
+			cadenaAcciones.clear();
 	}
 
 	// si la ultima accion es avanzar almacenamos la posicion desde donde nos movemos en el vectopr de ultimasCuatro posiciones

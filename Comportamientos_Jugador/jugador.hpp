@@ -32,7 +32,7 @@ class ComportamientoJugador : public Comportamiento{
       cadena_acciones_finalizada = true;
       has_repostado = false;
 
-      for(int i=0;i<4;i++)
+      for(int i=0;i<5;i++)
         ultimasCuatro.push_back(std::make_pair(i*2,i*2));
 
       for(int i=0;i<MAX_FILAS;i++)
@@ -88,7 +88,7 @@ class ComportamientoJugador : public Comportamiento{
   int fil, col, brujula, origen, max_giros,
       principio_fil, principio_col, //Almacenamos las coordenadas de donde emppiez a recorer la pared
       fil_aux,col_aux, // fila y columna auxiliar
-      posicion_vector, // Para acceder al vector de ultimas 4
+      posicion_vector, // Para acceder al vector de ultimas 5
       esta_en_bucle, // contamos que este en bucle por mas de 2 ciclos
       has_esperado, // esperamos unos movimientos para que no se quede ciclando en la misma posicion por una casilla a la que no puede acceder
       num_giros, // numero de veces que gira para ver si estamos girando sobre nosotros mismos
