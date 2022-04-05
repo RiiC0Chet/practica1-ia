@@ -74,6 +74,10 @@ class ComportamientoJugador : public Comportamiento{
       Buscamos una posicion, devolviendo un bool y reyenando el par con las posiciones si lo ha encontrado
     */
     bool busca(const char casilla,pair<int,int> & par, Sensores sensores);
+    /*
+      Comprobamos si estamos rodeando por fuera
+    */
+    bool RodeaPorFuera();
 
     Action think(Sensores sensores);
     int interact(Action accion, int valor);

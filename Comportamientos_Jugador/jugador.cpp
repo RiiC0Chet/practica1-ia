@@ -864,13 +864,23 @@ Action ComportamientoJugador::think(Sensores sensores){
 					{
 						// Si esta rodeando por dentro (mirar que no gire a la derecha si esta rodeando por fuera)
 						if(ya_visitada)
+						{
 							girar_der = true;
+							principio_fil = fil_aux - 1;
+							principio_fil = col_aux + 1;
+						}
+							
 						else
+						{
 							girar_izq = true;
+							principio_fil = fil_aux + 1;
+							principio_fil = col_aux - 1;
+						}
+							
 						
-						
-						principio_fil = fil_aux + 1;
-						principio_fil = col_aux - 1;
+						// BORRAR PONER NORMALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+						//principio_fil = fil_aux + 1;
+						//principio_fil = col_aux - 1;
 						// final_ciclo = true;
 						for (int i = 0; i < MAX_FILAS; i++)
 						{
