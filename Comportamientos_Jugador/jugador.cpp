@@ -1075,7 +1075,7 @@ Action ComportamientoJugador::think(Sensores sensores)
 		}
 
 		// si esta empty el vector y la cadena de acciones esta finalizada ha acabado
-		if (!cadena_acciones_finalizada && cadenaAcciones.empty())
+		if ( (!cadena_acciones_finalizada && cadenaAcciones.empty() ) || puedoPisar(0,sensores))
 			cadena_acciones_finalizada = true;
 
 		// si nos han comido y ya no estamos en la casilla de bateria quitamos las demas actIDLE
@@ -1176,7 +1176,7 @@ Action ComportamientoJugador::think(Sensores sensores)
             for(int j=0;j<mapaResultado.size();j++)
             {
                 if(mapaResultado[i][j] == '?')
-                    mapaResultado[i][j] = 'S';
+                    mapaResultado[i][j] = 'T';
             }
         }
     }
