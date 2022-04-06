@@ -1131,6 +1131,56 @@ Action ComportamientoJugador::think(Sensores sensores)
 	has_esperado++;
 	ultimaAccion = accion;
 
+	// si estamos a punto de morir pintamos todos los precipicios y los huecos que nos quedan de grava
+    if(sensores.vida < 200 || sensores.bateria < 200)
+    {
+        // ya que los precipicios solo estan el los bordes de 3 filas (extremo de arriba)
+        for(int i=0;i<3;i++)
+        {
+            for(int j=0;j<mapaResultado.size();j++)
+            {
+                mapaResultado[i][j] = 'P';
+            }
+        }
+
+        //pintamos los otros extremos (lateral izquierdo)
+        for(int j=0;j<3;j++)
+        {
+            for(int i=0;i<mapaResultado.size();i++)
+            {
+                mapaResultado[i][j] = 'P';
+            }
+        }
+
+        //pintamos los otros extremos (lateral derecho)
+        for(int j=mapaResultado.size()-1;j>mapaResultado.size()-4;j--)
+        {
+            for(int i=0;i<mapaResultado.size();i++)
+            {
+                mapaResultado[i][j] = 'P';
+            }
+        }
+
+        // ya que los precipicios solo estan el los bordes de 3 filas (extremo de abajo)
+        for(int i=mapaResultado.size()-1;i>mapaResultado.size()-4;i--)
+        {
+            for(int j=0;j<mapaResultado.size();j++)
+            {
+                mapaResultado[i][j] = 'P';
+            }
+        }
+
+        //una vez rellenados los bordes rellenamos el resto del mapa de grava
+        for(int i=0;i<mapaResultado.size();i++)
+        {
+            for(int j=0;j<mapaResultado.size();j++)
+            {
+                if(mapaResultado[i][j] == '?')
+                    mapaResultado[i][j] = 'S';
+            }
+        }
+    }
+
 	// Determinar el efecto de la ultima accion enviada
 	return accion;
 }
