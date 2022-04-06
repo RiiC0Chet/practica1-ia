@@ -45,6 +45,7 @@ public:
       {
         esta_pintada[i][j] = false;
         ciclo_anterior[i][j] = false;
+        cuadro[i][j] = '?';
       }
     }
   }
@@ -132,6 +133,8 @@ private:
       puerta;                     // almacenamos la posicion de alguna puerta para volver cuando estemos un rato sin avanzar
 
   std::map<pair<int, int>, int> RecuentoPasos; // contamos el numero de veces que pasamos por cada casilla
+
+  char cuadro[MAX_FILAS][MAX_COLUMNAS]; // mapa auxiliar donde vamos pintando antes de estar bien situados
 };
 
 #endif

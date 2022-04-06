@@ -87,7 +87,7 @@ bool ComportamientoJugador::puedoPisar(int pos, Sensores sensores)
 	//	ha_chocado = true;
 	//}
 
-	cout << "////////////////////////////////////////////////////////////  " << pos << " " << sensores.superficie[pos] << endl;
+	//cout << "////////////////////////////////////////////////////////////  " << pos << " " << sensores.superficie[pos] << endl;
 
 	return false;
 }
@@ -168,6 +168,7 @@ bool ComportamientoJugador::restart()
 		{
 			esta_pintada[i][j] = false;
 			ciclo_anterior[i][j] = false;
+			cuadro[i][j] = '?';
 		}
 	}
 }
@@ -639,6 +640,16 @@ Action ComportamientoJugador::think(Sensores sensores)
 		col = sensores.posC;
 		bien_situados = true;
 		paredEncontrad = false;
+
+		// pintamos lo que llevabamos visto hasta el momento
+		for(int i = 0;i<mapaResultado.size();i++)
+		{
+			for(int j = 0;j<mapaResultado.size();j++)
+			{
+				if(cuadro[fil_aux-fil+i][col_aux-col+j] != '?')
+					mapaResultado[i][j] = cuadro[fil_aux-fil+i][col_aux-col+j];
+			}
+		}
 	}
 
 	if (sensores.terreno[0] == 'D' && !zapatillas)
@@ -736,6 +747,90 @@ Action ComportamientoJugador::think(Sensores sensores)
 			mapaResultado[fil - 1][col - 3] = sensores.terreno[13];
 			mapaResultado[fil - 2][col - 3] = sensores.terreno[14];
 			mapaResultado[fil - 3][col - 3] = sensores.terreno[15];
+
+			break;
+		}
+	}
+	else // si no estamos bien posicionados lo amalcenamos en el auxiliar
+	{
+		switch (brujula)
+		{
+		case 0:
+			cuadro[fil_aux][col_aux] = sensores.terreno[0];
+			cuadro[fil_aux - 1][col_aux - 1] = sensores.terreno[1];
+			cuadro[fil_aux - 1][col_aux] = sensores.terreno[2];
+			cuadro[fil_aux - 1][col_aux + 1] = sensores.terreno[3];
+			cuadro[fil_aux - 2][col_aux - 2] = sensores.terreno[4];
+			cuadro[fil_aux - 2][col_aux - 1] = sensores.terreno[5];
+			cuadro[fil_aux - 2][col_aux] = sensores.terreno[6];
+			cuadro[fil_aux - 2][col_aux + 1] = sensores.terreno[7];
+			cuadro[fil_aux - 2][col_aux + 2] = sensores.terreno[8];
+			cuadro[fil_aux - 3][col_aux - 3] = sensores.terreno[9];
+			cuadro[fil_aux - 3][col_aux - 2] = sensores.terreno[10];
+			cuadro[fil_aux - 3][col_aux - 1] = sensores.terreno[11];
+			cuadro[fil_aux - 3][col_aux] = sensores.terreno[12];
+			cuadro[fil_aux - 3][col_aux + 1] = sensores.terreno[13];
+			cuadro[fil_aux - 3][col_aux + 2] = sensores.terreno[14];
+			cuadro[fil_aux - 3][col_aux + 3] = sensores.terreno[15];
+
+			break;
+
+		case 1:
+			cuadro[fil_aux][col_aux] = sensores.terreno[0];
+			cuadro[fil_aux - 1][col_aux + 1] = sensores.terreno[1];
+			cuadro[fil_aux][col_aux + 1] = sensores.terreno[2];
+			cuadro[fil_aux + 1][col_aux + 1] = sensores.terreno[3];
+			cuadro[fil_aux - 2][col_aux + 2] = sensores.terreno[4];
+			cuadro[fil_aux - 1][col_aux + 2] = sensores.terreno[5];
+			cuadro[fil_aux][col_aux + 2] = sensores.terreno[6];
+			cuadro[fil_aux + 1][col_aux + 2] = sensores.terreno[7];
+			cuadro[fil_aux + 2][col_aux + 2] = sensores.terreno[8];
+			cuadro[fil_aux - 3][col_aux + 3] = sensores.terreno[9];
+			cuadro[fil_aux - 2][col_aux + 3] = sensores.terreno[10];
+			cuadro[fil_aux - 1][col_aux + 3] = sensores.terreno[11];
+			cuadro[fil_aux][col_aux + 3] = sensores.terreno[12];
+			cuadro[fil_aux + 1][col_aux + 3] = sensores.terreno[13];
+			cuadro[fil_aux + 2][col_aux + 3] = sensores.terreno[14];
+			cuadro[fil_aux + 3][col_aux + 3] = sensores.terreno[15];
+
+			break;
+
+		case 2:
+			cuadro[fil_aux][col_aux] = sensores.terreno[0];
+			cuadro[fil_aux + 1][col_aux + 1] = sensores.terreno[1];
+			cuadro[fil_aux + 1][col_aux] = sensores.terreno[2];
+			cuadro[fil_aux + 1][col_aux - 1] = sensores.terreno[3];
+			cuadro[fil_aux + 2][col_aux + 2] = sensores.terreno[4];
+			cuadro[fil_aux + 2][col_aux + 1] = sensores.terreno[5];
+			cuadro[fil_aux + 2][col_aux] = sensores.terreno[6];
+			cuadro[fil_aux + 2][col_aux - 1] = sensores.terreno[7];
+			cuadro[fil_aux + 2][col_aux - 2] = sensores.terreno[8];
+			cuadro[fil_aux + 3][col_aux + 3] = sensores.terreno[9];
+			cuadro[fil_aux + 3][col_aux + 2] = sensores.terreno[10];
+			cuadro[fil_aux + 3][col_aux + 1] = sensores.terreno[11];
+			cuadro[fil_aux + 3][col_aux] = sensores.terreno[12];
+			cuadro[fil_aux + 3][col_aux - 1] = sensores.terreno[13];
+			cuadro[fil_aux + 3][col_aux - 2] = sensores.terreno[14];
+			cuadro[fil_aux + 3][col_aux - 3] = sensores.terreno[15];
+
+			break;
+		case 3:
+			cuadro[fil_aux][col_aux] = sensores.terreno[0];
+			cuadro[fil_aux + 1][col_aux - 1] = sensores.terreno[1];
+			cuadro[fil_aux][col_aux - 1] = sensores.terreno[2];
+			cuadro[fil_aux - 1][col_aux - 1] = sensores.terreno[3];
+			cuadro[fil_aux + 2][col_aux - 2] = sensores.terreno[4];
+			cuadro[fil_aux + 1][col_aux - 2] = sensores.terreno[5];
+			cuadro[fil_aux][col_aux - 2] = sensores.terreno[6];
+			cuadro[fil_aux - 1][col_aux - 2] = sensores.terreno[7];
+			cuadro[fil_aux - 2][col_aux - 2] = sensores.terreno[8];
+			cuadro[fil_aux + 3][col_aux - 3] = sensores.terreno[9];
+			cuadro[fil_aux + 2][col_aux - 3] = sensores.terreno[10];
+			cuadro[fil_aux + 1][col_aux - 3] = sensores.terreno[11];
+			cuadro[fil_aux][col_aux - 3] = sensores.terreno[12];
+			cuadro[fil_aux - 1][col_aux - 3] = sensores.terreno[13];
+			cuadro[fil_aux - 2][col_aux - 3] = sensores.terreno[14];
+			cuadro[fil_aux - 3][col_aux - 3] = sensores.terreno[15];
 
 			break;
 		}
